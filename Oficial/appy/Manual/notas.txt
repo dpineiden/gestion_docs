@@ -1,0 +1,26 @@
+Syntax error while parsing a note whose content is "[]". 
+
+In a note, you may specify at most 2 lines: a pod statement and a "from" clause. 
+
+A Pod statement has the form: 
+
+    do {element} [{command} {expression}]. 
+    
+{element} identifies the part of the document that will be impacted by the command. It must be one of ('text', 'title', 'section', 'table', 'row', 'cell'). Optional {command} can be "if" (conditional inclusion of the element) or "for" (multiple inclusion of the element). 
+
+For an "if" command, {expression} is any Python expression. 
+
+For a "for" command, {expression} must be of the form: {name} in {expression}. {name} must be a Python variable name. It is the name of the iteration variable. {expression} is a Python expression that, when evaluated, produces a Python sequence (tuple, string, list, etc). 
+
+A "from" clause has the form: 
+    from {expression}, 
+    
+  where {expression} is a Python expression that, when evaluated, produces a valid chunk of odt content that will be inserted instead of the element that is the target of the note.
+  
+  Para hacer un objeto iterable en Python, hay que seguir un determinado protocolo, que básicamente consiste en definir dos métodos, uno llamado __iter__() y otro llamado next(). El método __iter__ debe devolver un objeto de tipo iterator, y es llamado de forma implícita al comienzo del bucle. El método next() debe devolver el siguiente elemento en la secuencia, y es llamado de forma implícita en cada vuelta. next() debe elevar una excepción del tipo StopIteration cuando no haya más elementos disponibles. Esta excepción es capturada de forma implícita por el bucle for para terminar.
+  
+  
+  
+  Algunos trucos
+  
+  Escribir la variable -> cortar -> Modo grabar cambios -> pegar -> Fin de modo pegar cambios
