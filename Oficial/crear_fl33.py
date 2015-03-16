@@ -15,6 +15,7 @@ fieldnames_r08=['lab','matriz','n_estaciones','parametro','replicas','n_cotizaci
 fieldnames_obs=['lab','matriz','observacion']
 fieldnames_equ=['equipo','cantidad']
 fieldnames_adj=['lab','info']
+fieldnames_lab=['lab','direccion','horario','telefono','contacto']
 ###Importar variables desde bash
 #import subprocess
 import os
@@ -62,6 +63,7 @@ R08 = []
 OBS=[]
 EQU=[]
 ADJ=[]
+LAB=[]
 #Ahora, se deben leer los archivos csv:
 #matriz_estaciones.csv contiene la relacion de matriz con la lista de matriz_estaciones
 with open('PRE_CSV/matriz_estaciones.csv') as csvfile:
@@ -98,6 +100,13 @@ with open('PRE_CSV/adjuntos.csv') as csvfile:
   reader=csv.DictReader(csvfile,fieldnames_adj,delimiter=delimiter)
   for row in reader:
     ADJ.append(row)    
+
+#SSE_labs.csv contiene los datos de los laboratorios
+with open('PRE_CSV/SSE_labs.csv') as csvfile: 
+  reader=csv.DictReader(csvfile,fieldnames_lab,delimiter=delimiter)
+  for row in reader:
+    LAB.append(row) 
+
 ##################
 #Generar arreglo de datos para llenado de plantilla
 #cantidad de datos por listado
@@ -176,13 +185,13 @@ n_datos_R08=[]
 for i in range(0,N_Grupos_R08):
   Data_R08[i]['datos']=[]
 #para cada matriz llenar el campo dato con un diccionario de valores  
-for i in range(0,N_Grupos):
+for i in range(0,N_Grupos_R08):
   matriz=Data_R08[i]['lab']
   for j in range(0,n_r08):
    matriz_R08=R08[j]['lab'] 
    if (matriz_R08 == matriz):
      #Añadir la lista de datos asociada a matriz
-     llaves=R08[j].keys() 
+     llaves=R08[j].keys()
      ll_m=llaves.index('lab')
      ac=llaves.pop(ll_m)
      datos={k : R08[j][k] for k in llaves}
@@ -226,7 +235,23 @@ for i in range(0,N_Grupos_R08):
    lab_adj=ADJ[j]['lab']
    if ( lab_r08 == lab_adj ):
     info=ADJ[j]['info']
-    Data_R08[i]['adjunta']=info    
+    Data_R08[i]['adjunta']=info   
+
+
+##Pasar información de contacto de lanboratorio
+cant_labs=len(LAB)
+for i in range(0,N_Grupos_R08):
+  lab_r08=Data_R08[i]['lab']
+  #Agregar observacion vacia a cada posicion de laboratorios
+  Data_R08[i]['datos_lab']=''
+  for j in range(0,cant_labs):      
+   lab=LAB[j]['lab']
+   if ( lab_r08 == lab ):
+    direccion=re.sub('\\\\n','\n',LAB[j]['direccion'])+'-\n'
+    telefono=re.sub('\\\\n','\n',LAB[j]['telefono'])+'-\n'
+    contacto=re.sub('\\\\n','\n',LAB[j]['contacto'])+'\n'
+    Data_R08[i]['datos_lab']=direccion+telefono+contacto 
+
 #Añadir los instrumentos a solicitiar e FL33
 #tiene una estructura similar a Data[i]['datos'] como un arreglo de diccionarios
 #Se debe añadir directamente la lista a Data['equipos'][*]
@@ -278,9 +303,8 @@ N_labs=len(Data_R08)
 for i in range(0,N_labs):
  len(Data_R08[i]['datos']) 
  if len(Data_R08[i]['datos'])>0 :
-  LAB_Data_R08={'lab':Data_R08[i]['lab'],'adjunta':Data_R08[i]['adjunta'],'datos':Data_R08[i]['datos']}
+  LAB_Data_R08={'lab':Data_R08[i]['lab'],'adjunta':Data_R08[i]['adjunta'],'datos':Data_R08[i]['datos'],'datos_lab':Data_R08[i]['datos_lab']}
   N_datos=int_n_datos_r08[i]
-  N_datos
   #SE crea variable LAB_Data_R08['datos'][j]['*'] para cargar particularmente cada archivo
   Salida_R08='salida/R08_'+LAB_Data_R08['lab']+'_'+Codigo_Proyecto+'_'+Fecha_Solicita+'.ods'
   renderer_R08=Renderer(

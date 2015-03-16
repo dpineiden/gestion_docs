@@ -22,12 +22,17 @@ unset str_matriz
 unset str_this_matrices
 #Pasar Planilla Matriz a CSV,se coloca el numero de la hoja matriz en planilla a convertir
 hoja_matriz=1
+hoja_labs=2
 #Nombre de archivo excel
 export Excel="Patron_FL.xlsx"
 #Nombre archivo CSV
 export file_sse="SSE_matriz_test.csv"
+export file_labs="SSE_labs.csv"
 #Comando que convierte hoja de una planilla en CSV, -d es delimitador, -s indica la hoja, -e indica que reemplaza caracteres de escape
 xlsx2csv -d ';' -s$hoja_matriz -e $Excel $file_sse 
+xlsx2csv -d ';' -s$hoja_labs -e $Excel $file_labs 
+#Borrar encabezado de lista de laboratorios
+sed -i '1d' $file_labs
 #Extraer nombre de proyecto
 export Nombre_Proyecto=$(grep "Nombre Proyecto" $file_sse | awk -F';' '{print $2}')
 #Extraer area que solicita
