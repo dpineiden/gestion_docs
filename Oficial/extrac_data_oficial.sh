@@ -60,7 +60,7 @@ export Posicion_OBS=$(grep -nr 'Lab\\Observaciones' $file_sse | awk -F':' '{prin
 #Obtener posicion adjunta
 export Posicion_ADJ=$(grep -nr 'ADJUNTA' $file_sse | awk -F':' '{print $1}')
 #Obtener numero de filas de matriz base
-export N_filas=$((($Posicion_ME-1)-($Posicion_base)))
+export N_filas=$((($Posicion_ME-3)-($Posicion_base)))
 #Obtener la fila en que parten los datos
 #Extraer los datos
 #Lista de laboratorios
@@ -102,7 +102,7 @@ do
 this_matriz=${matriz[i]} 
 awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -v EQMAT="$Posicion_EQMAT" -F';' 'BEGIN{x=1;}
 {
-if (FNR>=Posicion && FNR<EQMAT) 
+if (FNR>=Posicion && FNR<EQMAT-2) 
 {
   if(NR==Posicion) 
   {
@@ -209,7 +209,7 @@ for ((i=0;i<=$Cant_lab-1;i++))
 ##Generar archivo de instrumentos para FL33
 export Equipos="equipos_cea.csv"
 #desde Posicion_EQMAT+1 hasta Posicion_OBS
-awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(EQMAT+1) && FNR<OBS){print $2,$1}}' $file_sse > $Equipos
+awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(EQMAT+1) && FNR<(OBS-3)){print $2,$1}}' $file_sse > $Equipos
 ##Generar archivos de Observaciones:
 #Se ordena segun lab:matriz:comentario
 for ((i=0;i<=$Cant_lab-1;i++))
@@ -231,7 +231,7 @@ for ((i=0;i<=$Cant_lab-1;i++))
       k=0      
       #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
       awk -F';' -v OBS="$Posicion_OBS" -v ADJ="$Posicion_ADJ" -v matriz_cols="$matriz_cols" -v lab="$Nombre_lab" -v nLab="$i" '(FNR>OBS){
-      if (FNR<ADJ){
+      if (FNR<(ADJ-2)){
       OFS=";";
       ncols=split(matriz_cols,columnas,";");
       pos=int(nLab+2);
