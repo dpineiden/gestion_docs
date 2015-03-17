@@ -265,27 +265,32 @@ for ((j=0;j<=$N_matrices-1;j++))
   #Cada nueva variable en awk se debe ingresar antecediendo -v
 	#&& $1~columnas[1]  
   #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
-  echo $matriz_cols
-  awk -F';' -v ADJ="$Posicion_ADJ" -v this_matriz="$matriz_cols" '{
+  awk -F';' -v ADJ="$Posicion_ADJ" -v matriz_cols="$matriz_cols" 'BEGIN{x=1;}{
   OFS=";";
-  if (FNR==ADJ) {
+  ncols=split(matriz_cols,columnas,";");
+  this_matriz=columnas[1];
+  if (NR==ADJ) {
     for (p=2;p<=NF;p++) 
     { 
-      if(this_matriz ~ $p) 
+      if (length($p)>0) 
       {
-	MADJ[p-1]=$p; 
+        #print this_matriz,$p,"Compara" this_matriz==$p;
+        MADJ[x] = $p;
+	x=1+x;
       }
     }
   };
-  Cantidad_Matrices=length(MADJ);
-  if (FNR>ADJ) {
-    for (p=2;p<Cantidad_Matrices+1;p++){
-      if ($p == "si") 
+  N_matrices=x-1;
+  if (NR>ADJ){
+  for (q=2;q<=N_matrices+1;q++) {
+      #print q,$q,"Comparacion "$xq ~ "si",$1,MADJ[q-1],"Actual "this_matriz;
+      if ($q ~ "si" &&  MADJ[q-1] ~ this_matriz) 
       {
-	print lab,MADJ[p],$p >> "adjuntos.csv";
+	print $1,MADJ[q-1],$q >> "adjuntos.csv";
       }
-    }            
-  }}' $file_sse 
+    }
+  }
+  }' $file_sse 
   #Si laboratorio es de los otros--->Generar resumen-->R08
 done
 #Elimar repetidas en double_adjuntos

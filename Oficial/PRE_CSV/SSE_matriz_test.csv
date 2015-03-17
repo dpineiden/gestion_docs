@@ -55,6 +55,6 @@ Cuadro 5;Escribir en cada celda, solo 'si', si adjunta algún documento en parti
 ADJUNTA;Agua Marina;Agua Salar;Agua Salar Dulce;Agua Dulce;Sedimento Marino;Sedimento Salar;Sedimento Salar Dulce;Sedimento Dulce;;;;;;;;;;
 CEA;si;;;;si;;;;;;;;;;;;;
 SGS;;;;;;;;;;;;;;;;;;
-ALS;;;;;;;;;;;;;;;;;;
+ALS;si;;;;si;;;;;;;;;;;;;
 BIODIVERSA;;;;;;;;;;;;;;;;;;
-HIDROLAB;;;;;;;;;;;;;;;;;;
+HIDROLAB;;;;;si;;;;;;;;;;;;;

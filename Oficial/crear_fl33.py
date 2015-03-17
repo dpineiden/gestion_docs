@@ -14,7 +14,7 @@ fieldnames_fl33=['lab','matriz','n_estaciones','parametro','replicas']
 fieldnames_r08=['lab','matriz','n_estaciones','parametro','replicas','n_cotizacion','costo','unidad_costo']
 fieldnames_obs=['lab','matriz','observacion']
 fieldnames_equ=['equipo','cantidad']
-fieldnames_adj=['lab','info']
+fieldnames_adj=['lab','matriz','info']
 fieldnames_lab=['lab','direccion','horario','telefono','contacto']
 ###Importar variables desde bash
 #import subprocess
@@ -237,7 +237,8 @@ for i in range(0,N_Grupos_R08):
    lab_adj=ADJ[j]['lab']
    if ( lab_r08 == lab_adj ):
     info=ADJ[j]['info']
-    Data_R08[i]['adjunta']=info   
+    if ( info == "si" ):
+     Data_R08[i]['adjunta']=info   
 
 
 ##Pasar información de contacto de lanboratorio
