@@ -207,7 +207,7 @@ for i in range(0,N_Grupos):
   for j in range(0,n_obs):
    lab=OBS[j]['lab']
    matriz_obs=OBS[j]['matriz']
-   pre_obs=OBS[j]['observacion']
+   pre_obs=OBS[j]['observacion']   
    observacion='<p>'+re.sub('\\\\n','</p><p>',pre_obs)+'</p>'
    if (lab == 'CEA' and matriz_obs == matriz ):
      Data[i]['observaciones']=observacion
@@ -224,6 +224,8 @@ for i in range(0,N_Grupos):
    if ( lab_r08 == lab_obs ):
     observacion=OBS_R08[j]['observacion']
     Data_R08[i]['observaciones']=observacion
+    
+    
 ##Pasar info de si adjunta o no documentos
 #ADJ
 n_adj= len(ADJ)

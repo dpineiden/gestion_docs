@@ -24,7 +24,11 @@ unset str_this_matrices
 hoja_matriz=1
 hoja_labs=2
 #Nombre de archivo excel
-export Excel="Patron_FL.xlsx"
+read -t 10 Excel
+if [ "${#Excel}" -eq "0" ]; then
+ Excel="Patron_FL.xlsx"
+fi
+export Excel
 #Nombre archivo CSV
 export file_sse="SSE_matriz_test.csv"
 export file_labs="SSE_labs.csv"
@@ -60,7 +64,7 @@ export N_filas=$((($Posicion_ME-1)-($Posicion_base)))
 #Obtener la fila en que parten los datos
 #Extraer los datos
 #Lista de laboratorios
-Laboratorios=("CEA" "SGS" "ALS" "BIODIVERSA" "HIDROLAB")
+Laboratorios=("CEA" "SGS" "ALS" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
 export Cant_lab=$(echo ${#Laboratorios[@]})
 #Numero de Columna de laboratorios
 export N_Lab=$(awk -F';' -v Posicion="$Posicion_base" '{
@@ -232,7 +236,11 @@ for ((i=0;i<=$Cant_lab-1;i++))
       pos=int(nLab+2);
       if(length($pos)>0 && columnas[1]~$1) {
       print lab,$1,$pos >> "observaciones.csv";
-      }}
+      }
+      if(length($pos)==0 && columnas[1]~$1) {
+      print lab,$1,"No" >> "observaciones.csv";
+      }
+      }
       if (FNR==ADJ){
       if (length($pos)==0) $pos="no";
       print lab,$pos >> "double_adjuntos.csv";
