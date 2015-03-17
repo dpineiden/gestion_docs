@@ -15,6 +15,7 @@ export Posicion_ADJ
 export N_filas
 export Cant_lab
 export N_Lab
+export elementos
 export this_matriz_estaciones
 export N_matrices
 export Equipos

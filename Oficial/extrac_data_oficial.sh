@@ -46,9 +46,9 @@ export Codigo_Proyecto=$(grep "Código Proyecto" $file_sse | awk -F';' '{print $
 #Extraer persona que solicita
 export Nombre_Solicita=$(grep "Solicitado por" $file_sse | awk -F';' '{print $2}')
 #Extraer fecha solicitud
-export Fecha_Solicita=$(grep "Fecha Solicitud" $file_sse | awk -F';' '{print $2}')
+export Fecha_Solicita=$(grep "Fecha Solicitud" $file_sse | awk -F';' '{print $2}'|sed 's/\//-/g')
 #Extraer fecha entrega
-export Fecha_Entrega=$(grep "Fecha Entrega de Material" $file_sse | awk -F';' '{print $2}')
+export Fecha_Entrega=$(grep "Fecha Entrega de Material" $file_sse | awk -F';' '{print $2}'|sed 's/\//-/g')
 #si se trabaja con 'date' sera necesario pasar la primera cifra a segundo lugar y la segunda a primer lugar
 export Posicion_base=$(grep -nr 'Cantidad (N° estaciones)' $file_sse | awk -F':' '{print $1}')
 #Donde esta la matriz de estiaciones/matriz fisica? obtener la posicion de linea
@@ -93,14 +93,16 @@ matriz=(
 "Sedimento Salar Dulce"
 "Sedimento Dulce"
 )
-elementos=${#matriz[@]}
-#Obtener los nombres de las estaciones en un arreglo al leer la fila Posicion_ME, a partir de la segunda columna hasta NF(numero de campos)
+export elementos=${#matriz[@]}
+#Obtener los nombres de las estaciones en un arreglo al leer las filas desde Posicion_ME+1 hasta fila -1 de Equipos-Materiales, 
+#a partir de la segunda columna hasta NF(numero de campos)
 #Busco en el tercer bloque, a partr de Posicion_ME+1, en los campos a partir de 2. Si tiene valor 1, entonces registrar la relacion de estacion con matriz 
 for ((i=0;i<=$elementos-1;i++))
 do
-this_matriz=${matriz[i-1]} 
-awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -F';' '
-{if (FNR>=Posicion) 
+this_matriz=${matriz[i]} 
+awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -v EQMAT="$Posicion_EQMAT" -F';' 'BEGIN{x=1;}
+{
+if (FNR>=Posicion && FNR<EQMAT) 
 {
   if(NR==Posicion) 
   {
@@ -108,27 +110,26 @@ awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -F';' '
     {
     if(length($p) > 0) 
     {
-      Estacion[p-1]=$p; 
+      Matriz[p-1]=$p; 
     }
   }
   };
-  Cantidad_Estaciones=length(Estacion);
+  Cantidad_Matrices=length(Matriz);
   if(NR>Posicion) 
   {
-    if(toupper($1)~toupper(this_matriz))
-      {
-      k=1;
-      for (i=2;i<=Cantidad_Estaciones+1;i++)
+  k=1;
+  for (p=2;p<=Cantidad_Matrices+1;p++){
+      if (toupper(Matriz[p-1])~toupper(this_matriz) && $p==1){
+	  this_estacion[k]=$1;
+	  k=k+1;      
+    }
+  };
+  if(k>1)
 	{
-	if($i==1)
-	  {
-	  this_estacion[k]=Estacion[i-1];
-	  k=k+1;
-	  }	  
-	}
-	if(k>1)
-	{
+	if (x==1){
 	printf this_matriz;
+	x=0;
+	}
 	for (m=1;m<=length(this_estacion);m++)
 	  {
 		printf ";"this_estacion[m];
@@ -136,7 +137,7 @@ awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -F';' '
 	}
       }
   }
-}}' $file_sse| awk '{print>>"matriz_estaciones.csv"}';
+}' $file_sse| awk '{print>>"matriz_estaciones.csv"}';
 done
 ##
 #Reemplazar espacios por guines 
