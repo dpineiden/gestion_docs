@@ -52,11 +52,11 @@ export Fecha_Entrega=$(grep "Fecha Entrega de Material" $file_sse | awk -F';' '{
 #si se trabaja con 'date' sera necesario pasar la primera cifra a segundo lugar y la segunda a primer lugar
 export Posicion_base=$(grep -nr 'Cantidad (N° estaciones)' $file_sse | awk -F':' '{print $1}')
 #Donde esta la matriz de estiaciones/matriz fisica? obtener la posicion de linea
-export Posicion_ME=$(grep -nr 'Matriz\\Estaciones' $file_sse | awk -F':' '{print $1}')
+export Posicion_ME=$(grep -nr 'Estaciones\\Matriz' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion instrumentos
 export Posicion_EQMAT=$(grep -nr 'Equipos-Materiales' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion obsevaciones
-export Posicion_OBS=$(grep -nr 'Observaciones\\Lab' $file_sse | awk -F':' '{print $1}')
+export Posicion_OBS=$(grep -nr 'Lab\\Observaciones' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion adjunta
 export Posicion_ADJ=$(grep -nr 'ADJUNTA' $file_sse | awk -F':' '{print $1}')
 #Obtener numero de filas de matriz base
