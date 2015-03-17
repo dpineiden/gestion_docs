@@ -64,7 +64,7 @@ export N_filas=$((($Posicion_ME-3)-($Posicion_base)))
 #Obtener la fila en que parten los datos
 #Extraer los datos
 #Lista de laboratorios
-Laboratorios=("CEA" "SGS" "ALS" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
+Laboratorios=("CEA" "SGS-SANTIAGO" "ALS-ANTOFA" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
 export Cant_lab=$(echo ${#Laboratorios[@]})
 #Numero de Columna de laboratorios
 export N_Lab=$(awk -F';' -v Posicion="$Posicion_base" '{
