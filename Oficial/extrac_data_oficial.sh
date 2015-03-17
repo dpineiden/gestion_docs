@@ -241,21 +241,57 @@ for ((i=0;i<=$Cant_lab-1;i++))
       if(length($pos)==0 && columnas[1]~$1) {
       print lab,$1,"No" >> "observaciones.csv";
       }
-      }
-      if (FNR==ADJ){
-      if (length($pos)==0) $pos="no";
-      print lab,$pos >> "double_adjuntos.csv";
-      k=1;
-      }      
+      }     
       }' $file_sse 
       #Si laboratorio es de los otros--->Generar resumen-->R08
     done
   done
 #Elimar repetidas en double_adjuntos
 
-cat double_adjuntos.csv | sort | uniq > adjuntos.csv
 
-####
+##Se genera archivo de adjuntos
+
+#Se ordena segun lab:matriz:comentario
+for ((j=0;j<=$N_matrices-1;j++))
+  do
+  # laboratorio-matriz - comentario
+  #Para esto se capturan las variables de <nombre lab> <matriz-cols> y se usan los valores de Nfilas y NColLab
+  #Entrega un string con el nombre y los indices:
+  matriz_cols=$(grep ${this_matrices[j]} $this_matriz_estaciones |awk -F':' '{print $1}' |sed 's/_/ /g' )
+  #dentro del awk:
+  #  Separo el nombre de matriz de cols y obtengo los indices de las columnas, itero en la cantidad de ellas
+  # las sumo, saco un promedio y obtengo el floor entero  del promedio 'replica=int(a/b)'
+  #limites=($Posicion_base $N_filas $N_Lab)
+  #Cada nueva variable en awk se debe ingresar antecediendo -v
+	#&& $1~columnas[1]  
+  #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
+  echo $matriz_cols
+  awk -F';' -v ADJ="$Posicion_ADJ" -v this_matriz="$matriz_cols" '{
+  OFS=";";
+  if (FNR==ADJ) {
+    for (p=2;p<=NF;p++) 
+    { 
+      if(this_matriz ~ $p) 
+      {
+	MADJ[p-1]=$p; 
+      }
+    }
+  };
+  Cantidad_Matrices=length(MADJ);
+  if (FNR>ADJ) {
+    for (p=2;p<Cantidad_Matrices+1;p++){
+      if ($p == "si") 
+      {
+	print lab,MADJ[p],$p >> "adjuntos.csv";
+      }
+    }            
+  }}' $file_sse 
+  #Si laboratorio es de los otros--->Generar resumen-->R08
+done
+#Elimar repetidas en double_adjuntos
+#cat double_adjuntos.csv | sort | uniq > adjuntos.csv
+
+#### cambiar el primer valor de la lista
 sed -i 's/;/:/' $this_matriz_estaciones  
   #Exporta variables
   #Pasar arrays a strings y exportar

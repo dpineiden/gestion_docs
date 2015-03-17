@@ -1,13 +1,5 @@
-CEA;Agua Dulce;40;Conductividad;1
-CEA;Agua Dulce;40;Oxígeno disuelto;1
-CEA;Agua Dulce;40;Temperatura del agua;1
-CEA;Agua Dulce;40;pH;1
-CEA;Agua Dulce;40;Fosfato;1
-CEA;Agua Dulce;40;Fosforo Total;1
-CEA;Agua Dulce;40;Nitrito;1
-CEA;Agua Dulce;40;Nitrato;1
-CEA;Agua Dulce;40;Amonio;1
-CEA;Agua Dulce;40;Clorofila a;1
-CEA;Agua Dulce;40;Transparencia;1
-CEA;Agua Dulce;40;Fitoplancton (cuantitativo y cualitativo);1
-CEA;Agua Dulce;30;Zooplancton (cuantitativo y cualitativo);1
+CEA;Agua Marina;10;Conductividad;1
+CEA;Agua Marina;10;Oxígeno disuelto;1
+CEA;Agua Marina;10;Arsénico DISUELTO;1
+CEA;Sedimento Marino;3;nitrito;1
+CEA;Sedimento Marino;3;nitrato;1
