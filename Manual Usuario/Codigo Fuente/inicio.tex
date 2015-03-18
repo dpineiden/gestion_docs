@@ -1,8 +1,16 @@
-\documentclass {article} 
+\documentclass[12pt,openright,letterpaper] {article} 
 \usepackage [spanish] {babel} 
 \usepackage [T1]{fontenc}
-\usepackage [latin1]{inputenc}
-\begin{document} 
-	Y ahora para que vean porque \TeX es mejor, una fórmula: 
-	$$ \frac{\pi}{4} = \int_0^1 \frac{1}{1+x^2} dx $$ 
+\usepackage [utf8] {inputenc}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+\begin{document} 	
+	\include{portada}
+	\include{introduccion}
 \end{document}

@@ -35,6 +35,8 @@ export file_labs="SSE_labs.csv"
 #Comando que convierte hoja de una planilla en CSV, -d es delimitador, -s indica la hoja, -e indica que reemplaza caracteres de escape
 xlsx2csv -d ';' -s$hoja_matriz -e $Excel $file_sse 
 xlsx2csv -d ';' -s$hoja_labs -e $Excel $file_labs 
+#lista de laboratorios a buscar en plantilla
+labs=($(awk -F';' '(FNR>1){print $1}' SSE_labs.csv | sed 's/ /_/g'))
 #Borrar encabezado de lista de laboratorios
 sed -i '1d' $file_labs
 #Extraer nombre de proyecto
@@ -64,7 +66,8 @@ export N_filas=$((($Posicion_ME-3)-($Posicion_base)))
 #Obtener la fila en que parten los datos
 #Extraer los datos
 #Lista de laboratorios
-Laboratorios=("CEA" "SGS-SANTIAGO" "ALS-ANTOFA" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
+Laboratorios=$labs
+#("CEA" "SGS SANTIAGO" "ALS ANTOFAGASTA" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
 export Cant_lab=$(echo ${#Laboratorios[@]})
 #Numero de Columna de laboratorios
 export N_Lab=$(awk -F';' -v Posicion="$Posicion_base" '{
@@ -154,7 +157,7 @@ export N_matrices=$(cat $this_matriz_estaciones | wc -l)
 for ((i=0;i<=$Cant_lab-1;i++))
   do
   # <nombre_laboratorio> es la variable que se ingresa para buscar segun la columna N_Lab
-    Nombre_lab=${Laboratorios[i]}
+    Nombre_lab=$(echo ${Laboratorios[$i]}|sed 's/_/ /g')
     for ((j=0;j<=$N_matrices-1;j++))
       do
       #SI Laboratorio es CEA-->generar resumen-->FL33
@@ -183,20 +186,21 @@ for ((i=0;i<=$Cant_lab-1;i++))
       posicion_Matriz=N_Lab-3;
       posicion_Cotizacion=N_Lab+3;
       posicion_Costo=N_Lab+4;
-      posicion_Unidad=N_Lab+5;
-      if($N_Lab~lab && $posicion_Matriz ~ columnas[1] )
+      posicion_Unidad=N_Lab+5;      
+      if($N_Lab~lab && $posicion_Matriz == columnas[1] )
 	{
+	#print $posicion_Matriz, columnas[1], N_Lab, $N_Lab, lab;
 	estaciones=$1;
 	parametro=$2;
 	replica=$3;
 	N_cotizacion=$posicion_Cotizacion;
 	Costo=$posicion_Costo;
 	Unidad_Costo=$posicion_Unidad;
-	if($N_Lab~"CEA")
+	if($N_Lab == "CEA")
 	{
 	  print lab,columnas[1], estaciones, parametro , replica >>"CEASA_FL33.csv";
 	} 
-	else if($N_Lab !~"CEA")
+	else if($N_Lab != "CEA")
 	{
 	  print lab,columnas[1], estaciones, parametro , replica, N_cotizacion,Costo,Unidad_Costo>>"OrdenCompra.csv";
 	}
@@ -211,11 +215,6 @@ export Equipos="equipos_cea.csv"
 #desde Posicion_EQMAT+1 hasta Posicion_OBS
 awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(EQMAT+1) && FNR<(OBS-3)){print $2,$1}}' $file_sse > $Equipos
 ##Generar archivos de Observaciones:
-#Se ordena segun lab:matriz:comentario
-for ((i=0;i<=$Cant_lab-1;i++))
-  do
-  # <nombre_laboratorio> es la variable que se ingresa para buscar segun la columna N_Lab
-    Nombre_lab=${Laboratorios[i]}
     for ((j=0;j<=$N_matrices-1;j++))
       do
       # laboratorio-matriz - comentario
@@ -230,22 +229,32 @@ for ((i=0;i<=$Cant_lab-1;i++))
             #&& $1~columnas[1]
       k=0      
       #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
-      awk -F';' -v OBS="$Posicion_OBS" -v ADJ="$Posicion_ADJ" -v matriz_cols="$matriz_cols" -v lab="$Nombre_lab" -v nLab="$i" '(FNR>OBS){
-      if (FNR<(ADJ-2)){
-      OFS=";";
-      ncols=split(matriz_cols,columnas,";");
-      pos=int(nLab+2);
-      if(length($pos)>0 && columnas[1]~$1) {
-      print lab,$1,$pos >> "observaciones.csv";
-      }
-      if(length($pos)==0 && columnas[1]~$1) {
-      print lab,$1,"No" >> "observaciones.csv";
-      }
-      }     
+      awk -F';' -v OBS="$Posicion_OBS" -v ADJ="$Posicion_ADJ" -v matriz_cols="$matriz_cols" -v nLab="$i" 'BEGIN{x=1;}{
+	OFS=";";
+	ncols=split(matriz_cols,columnas,";");
+	this_matriz=columnas[1];
+	if (NR==OBS) {
+	  for (p=2;p<=NF;p++) 
+	  { 
+	    if (length($p)>0) 
+	    {
+	      #print this_matriz,$p,"Compara" this_matriz==$p;
+	      MADJ[x] = $p;
+	      x=1+x;
+	    }
+	  }
+	};
+	N_matrices=x-1;    
+        if (NR>OBS && NR<(ADJ-2)){
+	  for (q=2;q<=N_matrices+1;q++) {
+	      if(length($q) > 0 &&   MADJ[q-1] ~ this_matriz) {
+	      print $1,this_matriz,$q >> "observaciones.csv";
+	      }
+	    }
+	  }  
       }' $file_sse 
       #Si laboratorio es de los otros--->Generar resumen-->R08
     done
-  done
 #Elimar repetidas en double_adjuntos
 
 
@@ -320,4 +329,7 @@ export str_this_matrices=$(echo {this_matrices[*]})
 ######################################
 grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"=os.environ[\""$2"\"]"}'|awk -F'=' '{exportar = "export " $1;exportar | getline d; close(exportar); print exportar}'>exporta_variables.sh
 
+cd PRE_CSV
+rm *.csv 
+cd ..
 mv *.csv PRE_CSV
