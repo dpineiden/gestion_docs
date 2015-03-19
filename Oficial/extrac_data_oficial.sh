@@ -33,9 +33,10 @@ export Excel
 #Nombre archivo CSV
 export file_sse="SSE_matriz_test.csv"
 export file_labs="SSE_labs.csv"
-#Comando que convierte hoja de una planilla en CSV, -d es delimitador, -s indica la hoja, -e indica que reemplaza caracteres de escape
-xlsx2csv -d ';' -s$hoja_matriz -e $Excel $file_sse 
-xlsx2csv -d ';' -s$hoja_labs -e $Excel $file_labs 
+#https://github.com/dilshod/xlsx2csv
+#Comando que convierte hoja de una planilla en CSV, -i omite lineas vacias ,-d es delimitador, -s indica la hoja, -e indica que reemplaza caracteres de escape
+xlsx2csv -i -d ';' -s$hoja_matriz -e $Excel $file_sse 
+xlsx2csv -i -d ';' -s$hoja_labs -e $Excel $file_labs 
 #lista de laboratorios a buscar en plantilla
 labs=($(awk -F';' '(FNR>1){print $1}' SSE_labs.csv | sed 's/ /_/g'))
 #Borrar encabezado de lista de laboratorios
@@ -57,11 +58,11 @@ export Posicion_base=$(grep -nr 'Cantidad (N° estaciones)' $file_sse | awk -F':
 #Donde esta la matriz de estiaciones/matriz fisica? obtener la posicion de linea
 export Posicion_ME=$(grep -nr 'Estaciones\\Matriz' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion instrumentos
-export Posicion_EQMAT=$(grep -nr 'Equipos-Materiales' $file_sse | awk -F':' '{print $1}')
+export Posicion_EQMAT=$(grep -nr 'Materiales y \\nEquipos' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion obsevaciones
-export Posicion_OBS=$(grep -nr 'Lab\\Observaciones' $file_sse | awk -F':' '{print $1}')
+export Posicion_OBS=$(grep -nr 'DOCUMENTO;Laboratorio' $file_sse | awk -F':' '{print $1}')
 #Obtener posicion adjunta
-export Posicion_ADJ=$(grep -nr 'ADJUNTA' $file_sse | awk -F':' '{print $1}')
+export Posicion_ADJ=$(grep -nr 'Adjuntos a R08' $file_sse | awk -F':' '{print $1}')
 #Obtener numero de filas de matriz base
 export N_filas=$((($Posicion_ME-3)-($Posicion_base)))
 #Obtener la fila en que parten los datos
@@ -69,7 +70,7 @@ export N_filas=$((($Posicion_ME-3)-($Posicion_base)))
 #Lista de laboratorios
 Laboratorios=$labs
 #("CEA" "SGS SANTIAGO" "ALS ANTOFAGASTA" "BIODIVERSA" "HIDROLAB" "AGUAS INDUSTRIALES LTDA")
-export Cant_lab=$(echo ${#Laboratorios[@]})
+export Cant_lab=$(echo ${#labs[@]})
 #Numero de Columna de laboratorios
 export N_Lab=$(awk -F';' -v Posicion="$Posicion_base" '{
 if (FNR==Posicion)
@@ -158,7 +159,8 @@ export N_matrices=$(cat $this_matriz_estaciones | wc -l)
 for ((i=0;i<=$Cant_lab-1;i++))
   do
   # <nombre_laboratorio> es la variable que se ingresa para buscar segun la columna N_Lab
-    Nombre_lab=$(echo ${Laboratorios[$i]}|sed 's/_/ /g')
+    Nombre_lab=$(echo ${labs[$i]}|sed 's/_/ /g')
+    #echo $Nombre_lab
     for ((j=0;j<=$N_matrices-1;j++))
       do
       #SI Laboratorio es CEA-->generar resumen-->FL33
@@ -187,8 +189,9 @@ for ((i=0;i<=$Cant_lab-1;i++))
       posicion_Matriz=N_Lab-3;
       posicion_Cotizacion=N_Lab+3;
       posicion_Costo=N_Lab+4;
-      posicion_Unidad=N_Lab+5;      
-      if($N_Lab~lab && $posicion_Matriz == columnas[1] )
+      posicion_Unidad=N_Lab+5;
+      #print lab;
+      if($N_Lab == lab && $posicion_Matriz == columnas[1] )
 	{
 	#print $posicion_Matriz, columnas[1], N_Lab, $N_Lab, lab;
 	estaciones=$1;
@@ -214,7 +217,7 @@ for ((i=0;i<=$Cant_lab-1;i++))
 ##Generar archivo de instrumentos para FL33
 export Equipos="equipos_cea.csv"
 #desde Posicion_EQMAT+1 hasta Posicion_OBS
-awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(EQMAT+1) && FNR<(OBS-3)){print $2,$1}}' $file_sse > $Equipos
+awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(EQMAT+2) && FNR<(OBS-2)){print $2,$1}}' $file_sse > $Equipos
 ##Generar archivos de Observaciones:
     for ((j=0;j<=$N_matrices-1;j++))
       do
@@ -235,7 +238,7 @@ awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(
 	ncols=split(matriz_cols,columnas,";");
 	this_matriz=columnas[1];
 	if (NR==OBS) {
-	  for (p=2;p<=NF;p++) 
+	  for (p=3;p<=NF;p++) 
 	  { 
 	    if (length($p)>0) 
 	    {
@@ -246,10 +249,10 @@ awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(
 	  }
 	};
 	N_matrices=x-1;    
-        if (NR>OBS && NR<(ADJ-2)){
-	  for (q=2;q<=N_matrices+1;q++) {
-	      if(length($q) > 0 &&   MADJ[q-1] ~ this_matriz) {
-	      print $1,this_matriz,$q >> "observaciones.csv";
+        if (NR>OBS && NR<ADJ){
+	  for (q=3;q<=N_matrices+2;q++) {
+	      if(length($q) > 0 &&   MADJ[q-2] ~ this_matriz) {
+	      print $2,this_matriz,$q >> "observaciones.csv";
 	      }
 	    }
 	  }  
@@ -275,7 +278,7 @@ for ((j=0;j<=$N_matrices-1;j++))
   #Cada nueva variable en awk se debe ingresar antecediendo -v
 	#&& $1~columnas[1]  
   #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
-  awk -F';' -v ADJ="$Posicion_ADJ" -v matriz_cols="$matriz_cols" 'BEGIN{x=1;}{
+  awk -F';' -v ADJ_0="$Posicion_ADJ" -v matriz_cols="$matriz_cols" 'BEGIN{x=1;ADJ=ADJ_0+2;}{
   OFS=";";
   ncols=split(matriz_cols,columnas,";");
   this_matriz=columnas[1];
