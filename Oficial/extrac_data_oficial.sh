@@ -24,6 +24,7 @@ unset str_this_matrices
 hoja_matriz=1
 hoja_labs=2
 #Nombre de archivo excel
+echo "[10 seg] Ingresa el nombre de archivo de planilla a procesar: (apreta Enter al finalizar)" 
 read -t 10 Excel
 if [ "${#Excel}" -eq "0" ]; then
  Excel="Patron_FL.xlsx"
@@ -332,4 +333,9 @@ grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"
 cd PRE_CSV
 rm *.csv 
 cd ..
+echo "Se ha generado la siguiente lista de archivos de datos:"
+ls -lpa *.csv
+echo "La cantidad de archivos es:"
+ls -lpa *.csv | wc -l
 mv *.csv PRE_CSV
+echo "Ahora, si se generó una lista de 8 archivos, procede a ejecutar 'python crear_fl33.py'"
