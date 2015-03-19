@@ -69,43 +69,43 @@ LAB=[]
 with open('PRE_CSV/matriz_estaciones.csv') as csvfile:
   reader=csv.DictReader(csvfile,fieldnames_me,delimiter=':')
   for row in reader:
-    ME.append(row)
+   ME.append(row)
     
 #CEASA_FL33.csv contiene los datos de matrices y parametros que van a CEASA, se llena con esto el FL33
 with open('PRE_CSV/CEASA_FL33.csv') as csvfile:
   reader=csv.DictReader(csvfile,fieldnames_fl33,delimiter=delimiter)
   for row in reader:
-    CEASA.append(row)   
+   CEASA.append(row)   
     
 #CEASA_FL33.csv contiene los datos de matrices y parametros que van a CEASA, se llena con esto el FL33
 with open('PRE_CSV/observaciones.csv') as csvfile:
   reader=csv.DictReader(csvfile,fieldnames_obs,delimiter=delimiter)
   for row in reader:
-    OBS.append(row) 
+   OBS.append(row) 
 
 #CEASA_FL33.csv contiene los datos de matrices y parametros que van a CEASA, se llena con esto el FL33
 with open('PRE_CSV/equipos_cea.csv') as csvfile:
   reader=csv.DictReader(csvfile,fieldnames_equ,delimiter=delimiter)
   for row in reader:
-    EQU.append(row)     
+   EQU.append(row)     
     
 #OrdenCOmpra.csv contiene los datos de los laboratorios en que hay que hacer ordenes de compra
 with open('PRE_CSV/OrdenCompra.csv') as csvfile: 
   reader=csv.DictReader(csvfile,fieldnames_r08,delimiter=delimiter)
   for row in reader:
-    R08.append(row)
+   R08.append(row)
 
 #adjuntos.csv contiene afirmacion o negacion de si hay documentos adjuntos
 with open('PRE_CSV/adjuntos.csv') as csvfile: 
   reader=csv.DictReader(csvfile,fieldnames_adj,delimiter=delimiter)
   for row in reader:
-    ADJ.append(row)    
+   ADJ.append(row)    
 
 #SSE_labs.csv contiene los datos de los laboratorios
 with open('PRE_CSV/SSE_labs.csv') as csvfile: 
   reader=csv.DictReader(csvfile,fieldnames_lab,delimiter=delimiter)
   for row in reader:
-    LAB.append(row) 
+   LAB.append(row) 
 
 ##################
 #Generar arreglo de datos para llenado de plantilla
@@ -215,7 +215,7 @@ for i in range(0,N_Grupos):
      OBS_R08.append({'lab':lab,'observacion':observacion})
 #Pasar OBS_R08 a Data_R08
 n_obs_r08=len(OBS_R08)
-for i in range(0,N_Grupos):
+for i in range(0,N_Grupos_R08):
   lab_r08=Data_R08[i]['lab']
   #Agregar observacion vacia a cada posicion de laboratorios
   Data_R08[i]['observaciones']=''
