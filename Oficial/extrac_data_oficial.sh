@@ -20,6 +20,8 @@ unset str_laboratorios
 unset str_limites
 unset str_matriz
 unset str_this_matrices
+unset labs
+unset Laboratorios
 #Pasar Planilla Matriz a CSV,se coloca el numero de la hoja matriz en planilla a convertir
 hoja_matriz=1
 hoja_labs=2

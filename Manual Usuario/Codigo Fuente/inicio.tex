@@ -1,4 +1,4 @@
-\documentclass[12pt,openright,letterpaper] {article} 
+\documentclass[12pt,openright,letterpaper] {report} 
 \usepackage [spanish] {babel} 
 \usepackage [T1]{fontenc}
 \usepackage [utf8] {inputenc}
@@ -10,6 +10,10 @@
 	linkcolor=black,
 	urlcolor=black
 }
+\usepackage{titlesec}
+\titleformat{\chapter}
+{\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\renewcommand\thesection{\roman{chapter}}
 \begin{document} 	
 	\include{portada}
 	\include{introduccion}
