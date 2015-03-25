@@ -1,2 +1,7 @@
-HIDROLAB;Sedimento Marino;11;Feofitina total;5;0;0;0
-U DE CONCEPCIÓN;Agua Marina;12;Fósforo  disuelto;3;0;0;0
+HIDROLAB;Agua Marina;7;Sulfato  disuelto;1;;103;CLP$
+HIDROLAB;Agua Marina;7;Índice total;1;;104;CLP$
+HIDROLAB;Agua Dulce;3;nitrito total;1;;105;CLP$
+HIDROLAB;Sedimento Marino;8;Feofitina total;2;;101;US
+U DE CONCEPCIÓN;Agua Dulce;3;Fósforo  disuelto;1;;102;CLP$
+SGS SANTIAGO;Agua Marina;7;nitrato  disuelto;1;;107;CLP$
+SGS SANTIAGO;Sedimento Marino;8;Cromo total;1;;108;CLP$

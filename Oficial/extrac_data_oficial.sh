@@ -109,7 +109,7 @@ do
 this_matriz=${matriz[i]} 
 awk -v this_matriz="$this_matriz" -v Posicion="$Posicion_ME" -v EQMAT="$Posicion_EQMAT" -F';' 'BEGIN{x=1;}
 {
-if (FNR>=Posicion && FNR<EQMAT-2) 
+if (FNR>=Posicion && FNR<EQMAT) 
 {
   if(NR==Posicion) 
   {

@@ -81,22 +81,28 @@ Estilo_TABLA="""<style:style style:name="estilo_tabla" style:family="table" styl
 Estilo_COLUMNA="""<style:style style:name="co3" style:family="table-column">
 <style:table-column-properties fo:break-before="auto" style:column-width="4.5cm"/>
 </style:style>"""
-Estilo_CELDA_PAR="""<style:style style:name="Result" style:family="table-cell" style:parent-style-name="Default">
-<style:text-properties fo:font-style="italic" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color" fo:font-weight="bold"/>
-</style:style>"""
-Estilo_CELDA_CON="""<style:style style:name="ce4" style:family="table-cell" style:parent-style-name="Default">
+Estilo_CELDA_PAR="""<style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default">
 <style:table-cell-properties fo:border="0.06pt solid #000000"/>
-<style:text-properties fo:color="#006666" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+<style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+</style:style>"""
+Estilo_CELDA_CON="""<style:style style:name="ce2" style:family="table-cell" style:parent-style-name="Default">
+<style:table-cell-properties fo:border="0.06pt solid #000000"/>
+<style:text-properties fo:color="#660033" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+</style:style>
+<style:style style:name="ce3" style:family="table-cell" style:parent-style-name="Default">
+<style:table-cell-properties fo:border="0.06pt solid #000000"/>
+<style:text-properties fo:color="#006633" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
 </style:style>"""
 
 Matrices.inject_style(Estilo_TABLA+Estilo_COLUMNA+Estilo_CELDA_PAR+Estilo_CELDA_CON)
 
-Tabla_EP.style_name("estilo_tabla")
-Tabla_EC.style_name("estilo_tabla")
+Tabla_EP.style_name="estilo_tabla"
+Tabla_EC.style_name="estilo_tabla"
 
 Tabla_EP['A1'].set_value('Parámetro\\Estación')
-
+Tabla_EP['A1'].style_name="ce1"
 Tabla_EC['A1'].set_value('Contenedor\\Estación')
+Tabla_EC['A1'].style_name="ce1"
 
 
 for i in range(1,n_EST):
