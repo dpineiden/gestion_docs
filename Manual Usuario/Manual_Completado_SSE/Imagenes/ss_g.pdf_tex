@@ -1,0 +1,68 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'ss_g.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{255.71882362bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.98745761)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{ss_g.pdf}}%
+    \put(0.46010017,1.41296295){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Matriz{k}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{ss_g.pdf}}%
+    \put(0.42335308,1.64983028){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Estación{j}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{ss_g.pdf}}%
+    \put(0.41835749,1.87775918){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Proyecto{i}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{ss_g.pdf}}%
+    \put(0.38983161,1.1448113){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Parámetro{l}}}}%
+    \put(0.4264397,0.66509062){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Laboratorio{m}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{ss_g.pdf}}%
+    \put(0.01889764,0.06630043){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{R08}}}%
+    \put(0.55297104,0.06630043){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{FL33}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{ss_g.pdf}}%
+    \put(0.71190281,0.28168363){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{==CEA}}}%
+    \put(0.04040636,0.29285675){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{!=CEA}}}%
+  \end{picture}%
+\endgroup%

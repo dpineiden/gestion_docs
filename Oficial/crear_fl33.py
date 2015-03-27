@@ -14,7 +14,7 @@ fieldnames_fl33=['lab','matriz','n_estaciones','parametro','replicas']
 fieldnames_r08=['lab','matriz','n_estaciones','parametro','replicas','n_cotizacion','costo','unidad_costo']
 fieldnames_obs=['lab','matriz','observacion']
 fieldnames_equ=['equipo','cantidad']
-fieldnames_adj=['lab','matriz','info']
+fieldnames_adj=['lab','info']
 fieldnames_lab=['lab','direccion','horario','telefono','contacto']
 ###Importar variables desde bash
 #import subprocess
@@ -22,7 +22,9 @@ import os
 import subprocess
 #subprocess.call("source k.sh",shell=True)
 #Generador: grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"=os.environ[\""$2"\"]"}'
+
 Excel=os.environ["Excel"]
+No_solicitud=os.environ["No_solicitud"]
 file_sse=os.environ["file_sse"]
 Nombre_Proyecto=os.environ["Nombre_Proyecto"]
 Codigo_Proyecto=re.sub(' ' ,'',os.environ["Codigo_Proyecto"])
@@ -47,7 +49,7 @@ N_matrices=os.environ["N_matrices"]
 ##
 Plantilla='templates/FL33.odt'
 Plantilla_R08='templates/R08.ods'
-Salida='salida/FL33_'+Codigo_Proyecto+'_'+Fecha_Solicita+'.odt'
+Salida='salida/FL33_'+Codigo_Proyecto+'_'+Fecha_Solicita+'_NoSSE_'+No_solicitud+'.odt'
 
 Proyecto = {
   'nombre':Nombre_Proyecto,
@@ -309,7 +311,7 @@ for i in range(0,N_labs):
   LAB_Data_R08={'lab':Data_R08[i]['lab'],'adjunta':Data_R08[i]['adjunta'],'datos':Data_R08[i]['datos'],'datos_lab':Data_R08[i]['datos_lab']}
   N_datos=int_n_datos_r08[i]
   #SE crea variable LAB_Data_R08['datos'][j]['*'] para cargar particularmente cada archivo
-  Salida_R08='salida/R08_'+LAB_Data_R08['lab']+'_'+Codigo_Proyecto+'_'+Fecha_Solicita+'.ods'
+  Salida_R08='salida/R08_'+LAB_Data_R08['lab']+'_'+Codigo_Proyecto+'_'+Fecha_Solicita+'_NoSSE_'+No_solicitud+'.ods'
   renderer_R08=Renderer(
     Plantilla_R08,	#Plantilla
     globals(),	#Contexto

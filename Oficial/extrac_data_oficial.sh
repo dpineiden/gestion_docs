@@ -1,4 +1,29 @@
 #!/bin/bash
+#Tutorial getops:http://wiki.bash-hackers.org/howto/getopts_tutorial
+# A POSIX variable
+OPTIND=1      
+
+nuevo_archivo=0
+#iniciar nuestas variables:
+ARCHIVO="Patron_FL.xlsx"
+
+while getopts "vf:" opt; do
+  case $opt in
+    f)	output_file=$OPTARG
+	nuevo_archivo=1
+	;;
+    v)  verbose=1
+	;;
+    esac
+done
+
+if [ $nuevo_archivo -eq 1 ]; then
+ ARCHIVO=$output_file
+fi
+
+Excel=$ARCHIVO
+
+#si verbose=1 generar las preguntas
 #Borrar valores de variables anteriores
 unset Excel
 unset file_sse
@@ -25,12 +50,16 @@ unset Laboratorios
 #Pasar Planilla Matriz a CSV,se coloca el numero de la hoja matriz en planilla a convertir
 hoja_matriz=1
 hoja_labs=2
+
+if [ verbose -eq 1 ]; then
 #Nombre de archivo excel
-echo "[10 seg] Ingresa el nombre de archivo de planilla a procesar: (apreta Enter al finalizar)" 
-read -t 10 Excel
-if [ "${#Excel}" -eq "0" ]; then
- Excel="Patron_FL.xlsx"
+  echo "[10 seg] Ingresa el nombre de archivo de planilla a procesar: (apreta Enter al finalizar)" 
+  read -t 10 Excel
+  if [ "${#Excel}" -eq "0" ]; then
+    Excel="Patron_FL.xlsx"
+  fi
 fi
+
 export Excel
 #Nombre archivo CSV
 export file_sse="SSE_matriz_test.csv"
@@ -43,6 +72,8 @@ xlsx2csv -i -d ';' -s$hoja_labs -e $Excel $file_labs
 labs=($(awk -F';' '(FNR>1){print $1}' SSE_labs.csv | sed 's/ /_/g'))
 #Borrar encabezado de lista de laboratorios
 sed -i '1d' $file_labs
+#Numero de solicitud de servicio:
+export No_solicitud=$(awk -F';' '(FNR==1){print $7}' SSE_matriz_test.csv)
 #Extraer nombre de proyecto
 export Nombre_Proyecto=$(grep "Nombre Proyecto" $file_sse | awk -F';' '{print $2}')
 #Extraer area que solicita
@@ -267,47 +298,17 @@ awk -F';' -v EQMAT="$Posicion_EQMAT" -v OBS="$Posicion_OBS"  '{OFS=";";if (FNR>(
 ##Se genera archivo de adjuntos
 
 #Se ordena segun lab:matriz:comentario
-for ((j=0;j<=$N_matrices-1;j++))
-  do
-  # laboratorio-matriz - comentario
-  #Para esto se capturan las variables de <nombre lab> <matriz-cols> y se usan los valores de Nfilas y NColLab
-  #Entrega un string con el nombre y los indices:
-  matriz_cols=$(grep ${this_matrices[j]} $this_matriz_estaciones |awk -F':' '{print $1}' |sed 's/_/ /g' )
-  #dentro del awk:
-  #  Separo el nombre de matriz de cols y obtengo los indices de las columnas, itero en la cantidad de ellas
-  # las sumo, saco un promedio y obtengo el floor entero  del promedio 'replica=int(a/b)'
-  #limites=($Posicion_base $N_filas $N_Lab)
-  #Cada nueva variable en awk se debe ingresar antecediendo -v
-	#&& $1~columnas[1]  
-  #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
-  awk -F';' -v ADJ_0="$Posicion_ADJ" -v matriz_cols="$matriz_cols" 'BEGIN{x=1;ADJ=ADJ_0+2;}{
+  awk -F';' -v ADJ_0="$Posicion_ADJ" 'BEGIN{x=1;ADJ=ADJ_0+2;}{
   OFS=";";
-  ncols=split(matriz_cols,columnas,";");
-  this_matriz=columnas[1];
-  if (NR==ADJ) {
-    for (p=2;p<=NF;p++) 
-    { 
-      if (length($p)>0) 
-      {
-        #print this_matriz,$p,"Compara" this_matriz==$p;
-        MADJ[x] = $p;
-	x=1+x;
-      }
-    }
-  };
-  N_matrices=x-1;
   if (NR>ADJ){
-  for (q=2;q<=N_matrices+1;q++) {
-      #print q,$q,"Comparacion "$xq ~ "si",$1,MADJ[q-1],"Actual "this_matriz;
-      if ($q ~ "si" &&  MADJ[q-1] ~ this_matriz) 
+      if ($2 ~ "si") 
       {
-	print $1,MADJ[q-1],$q >> "adjuntos.csv";
+	print $1,$2 >> "adjuntos.csv";
       }
     }
-  }
   }' $file_sse 
   #Si laboratorio es de los otros--->Generar resumen-->R08
-done
+
 #Elimar repetidas en double_adjuntos
 #cat double_adjuntos.csv | sort | uniq > adjuntos.csv
 
@@ -338,9 +339,11 @@ grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"
 cd PRE_CSV
 rm *.csv 
 cd ..
-echo "Se ha generado la siguiente lista de archivos de datos:"
-ls -lpa *.csv
-echo "La cantidad de archivos es:"
-ls -lpa *.csv | wc -l
-mv *.csv PRE_CSV
-echo "Ahora, si se generó una lista de 8 archivos, procede a ejecutar 'python crear_fl33.py'"
+if [ verbose -eq 1 ]; then
+  echo "Se ha generado la siguiente lista de archivos de datos:"
+  ls -lpa *.csv
+  echo "La cantidad de archivos es:"
+  ls -lpa *.csv | wc -l
+  mv *.csv PRE_CSV
+  echo "Ahora, si se generó una lista de 8 archivos, procede a ejecutar 'python crear_fl33.py'"
+fi

@@ -1,6 +1,7 @@
 export Excel
 export file_sse
 export file_labs
+export No_solicitud
 export Nombre_Proyecto
 export Nombre_Area
 export Codigo_Proyecto
