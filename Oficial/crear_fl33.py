@@ -172,12 +172,10 @@ for i in range(0,n_r08):
   if LD==0:
    Data_R08.append(item_lab)
   LD=len(Data_R08)
-  j=0
-  while (Existe_Grupo and j<LD):
-   Existe_Grupo = (lab in Data_R08[j].values()) 
-   j=1+j
+  Existe_Grupo = any(d['lab']==lab for d in Data_R08 )
   if not Existe_Grupo:
-   Data_R08.append(item_lab)    
+   Data_R08.append(item_lab)
+   Existe_Grupo=False
 
 #Agregar datos de los parametros a medir correspondientes a cada LAB para el R08   
 ###

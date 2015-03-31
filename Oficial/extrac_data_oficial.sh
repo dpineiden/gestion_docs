@@ -3,6 +3,7 @@
 # A POSIX variable
 OPTIND=1      
 
+verbose=1
 nuevo_archivo=0
 #iniciar nuestas variables:
 ARCHIVO="Patron_FL.xlsx"
@@ -11,6 +12,7 @@ while getopts "vf:" opt; do
   case $opt in
     f)	output_file=$OPTARG
 	nuevo_archivo=1
+	verbose=0
 	;;
     v)  verbose=1
 	;;
@@ -51,27 +53,27 @@ unset Laboratorios
 hoja_matriz=1
 hoja_labs=2
 
-if [ verbose -eq 1 ]; then
+if [ $verbose -eq 1 ]; then
 #Nombre de archivo excel
   echo "[10 seg] Ingresa el nombre de archivo de planilla a procesar: (apreta Enter al finalizar)" 
-  read -t 10 Excel
-  if [ "${#Excel}" -eq "0" ]; then
-    Excel="Patron_FL.xlsx"
+  read -t 10 ARCHIVO
+  if [ "${#ARCHIVO}" -eq "0" ]; then
+    ARCHIVO="Patron_FL.xlsx"
   fi
 fi
-
-export Excel
 #Nombre archivo CSV
 export file_sse="SSE_matriz_test.csv"
 export file_labs="SSE_labs.csv"
 #https://github.com/dilshod/xlsx2csv
 #Comando que convierte hoja de una planilla en CSV, -i omite lineas vacias ,-d es delimitador, -s indica la hoja, -e indica que reemplaza caracteres de escape
+Excel=$ARCHIVO
 xlsx2csv -i -d ';' -s$hoja_matriz -e $Excel $file_sse 
 xlsx2csv -i -d ';' -s$hoja_labs -e $Excel $file_labs 
 #lista de laboratorios a buscar en plantilla
 labs=($(awk -F';' '(FNR>1){print $1}' SSE_labs.csv | sed 's/ /_/g'))
 #Borrar encabezado de lista de laboratorios
 sed -i '1d' $file_labs
+export Excel
 #Numero de solicitud de servicio:
 export No_solicitud=$(awk -F';' '(FNR==1){print $7}' SSE_matriz_test.csv)
 #Extraer nombre de proyecto
@@ -339,11 +341,11 @@ grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"
 cd PRE_CSV
 rm *.csv 
 cd ..
-if [ verbose -eq 1 ]; then
+if [ $verbose -eq 1 ]; then
   echo "Se ha generado la siguiente lista de archivos de datos:"
   ls -lpa *.csv
   echo "La cantidad de archivos es:"
   ls -lpa *.csv | wc -l
-  mv *.csv PRE_CSV
   echo "Ahora, si se generó una lista de 8 archivos, procede a ejecutar 'python crear_fl33.py'"
 fi
+mv *.csv PRE_CSV

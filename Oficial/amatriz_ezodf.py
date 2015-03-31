@@ -23,6 +23,16 @@ from arraydict2string import arraydict2string
 #####################
 from ezodf import newdoc, Paragraph, Heading, Sheet, opendoc, Cell
 
+##Importar variables de proyecto
+No_solicitud=os.environ["No_solicitud"]
+Nombre_Proyecto=os.environ["Nombre_Proyecto"]
+Codigo_Proyecto=re.sub(' ' ,'',os.environ["Codigo_Proyecto"])
+Nombre_Area=os.environ["Nombre_Area"]
+Nombre_Solicita=os.environ["Nombre_Solicita"]
+Fecha_Solicita=os.environ["Fecha_Solicita"]
+Fecha_Entrega=os.environ["Fecha_Entrega"]
+
+###
 delimiter=';'
 fieldnames_param=['parametro']
 fieldnames_contenedor=['contenedor']
@@ -52,72 +62,91 @@ n_PARAM=len(PARAM)
 n_CONT=len(CONT)
 n_EST=len(EST)
 
+#Para contenedor-estacion
+Plantilla_CE='templates/R115.ods'
+#Para parametros-estaciones
+Plantilla_PE='templates/Param_Est.ods'
 
-Nombre_Proyecto=os.environ["Nombre_Proyecto"]
-Codigo_Proyecto=re.sub(' ' ,'',os.environ["Codigo_Proyecto"])
-Nombre_Area=os.environ["Nombre_Area"]
-Nombre_Solicita=os.environ["Nombre_Solicita"]
-Fecha_Solicita=os.environ["Fecha_Solicita"]
-Fecha_Entrega=os.environ["Fecha_Entrega"]
+Salida_CE='salida/R115_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
+Salida_PE='salida/Matriz_PE_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
 
-Plantilla='templates/Matrices.ods'
-Salida='salida/Matrices_'+Codigo_Proyecto+'_'+Fecha_Solicita+'.ods'
 
-#Opcion EZODF
-Matrices = newdoc(doctype="ods",filename=Salida)
-#Se añaden las dos hojas del spreadsheet
-
+#Generar R115 de contenedores estaciones
+#Opcion EZODF: Se guarda la plantilla con el nombre del doc
+Matriz_CE = newdoc(doctype="ods",filename=Salida_CE,template=Plantilla_CE)
+#Cargar la hoja template en el python
+Tabla_EC = Matriz_CE.sheets[0]
+#En C4 se pone No_solicitud servicio
+Tabla_EC['C4'].set_value(No_solicitud)
+#En C5 Nombre de proyecto
+Tabla_EC['C5'].set_value(Nombre_Proyecto)
+#En C6 es el código del proyecto
+Tabla_EC['C6'].set_value(Codigo_Proyecto)
+#En C7 Nombre del Solicitante
+Tabla_EC['C7'].set_value(Nombre_Solicita)
+#En c8 el área que Solicitante
+Tabla_EC['C8'].set_value(Nombre_Area)
+#en C9 la fecha de No_solicitud
+Tabla_EC['C9'].set_value(Fecha_Solicita)
+#En c10 fecha entrega
+Tabla_EC['C10'].set_value(Fecha_Entrega)
 #Crear dos tablas, una para estacion parametros, otra para contenedor.
-sheets= Matrices.sheets
 
-Tabla_EP = Sheet("Parametros_Estaciones",size=(n_PARAM+1,n_EST+1))
-Tabla_EC = Sheet("Contenedores_Estaciones",size=(n_PARAM+1,n_EST+1))
+#Fila de llenado
+row_matrix=12
 
-sheets += Tabla_EP
-sheets += Tabla_EC
-Estilo_TABLA="""<style:style style:name="estilo_tabla" style:family="table" style:master-page-name="Default">
-<style:table-properties table:display="true" style:writing-mode="lr-tb"/>
-</style:style>"""
-Estilo_COLUMNA="""<style:style style:name="co3" style:family="table-column">
-<style:table-column-properties fo:break-before="auto" style:column-width="4.5cm"/>
-</style:style>"""
-Estilo_CELDA_PAR="""<style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default">
-<style:table-cell-properties fo:border="0.06pt solid #000000"/>
-<style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
-</style:style>"""
-Estilo_CELDA_CON="""<style:style style:name="ce2" style:family="table-cell" style:parent-style-name="Default">
-<style:table-cell-properties fo:border="0.06pt solid #000000"/>
-<style:text-properties fo:color="#660033" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
-</style:style>
-<style:style style:name="ce3" style:family="table-cell" style:parent-style-name="Default">
-<style:table-cell-properties fo:border="0.06pt solid #000000"/>
-<style:text-properties fo:color="#006633" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
-</style:style>"""
+n_cols=Tabla_EC.ncols()
+n_rows=Tabla_EC.nrows()
+count_cols=n_EST-n_cols+1
+count_rows=n_rows+n_CONT-row_matrix
 
-Matrices.inject_style(Estilo_TABLA+Estilo_COLUMNA+Estilo_CELDA_PAR+Estilo_CELDA_CON)
+Tabla_EC.append_columns(count=count_cols)
+Tabla_EC.append_rows(count=count_rows)
 
-Tabla_EP.style_name="estilo_tabla"
-Tabla_EC.style_name="estilo_tabla"
+for i in range(1,n_EST):
+  Tabla_EC[row_matrix-1,i].set_value(EST[i-1]['estacion'])
 
-Tabla_EP['A1'].set_value('Parámetro\\Estación')
-Tabla_EP['A1'].style_name="ce1"
-Tabla_EC['A1'].set_value('Contenedor\\Estación')
-Tabla_EC['A1'].style_name="ce1"
+fila_end=row_matrix+n_CONT
+for j in range(row_matrix,fila_end):  
+  contenedor=CONT[j-row_matrix]['contenedor']
+  Tabla_EC[j,0].set_value(contenedor)
+
+#Se guarda la Matriz_CE como planilla ods
+
+Matriz_CE.save()
+
+
+###Parametros estaciones
+
+Matriz_PE = newdoc(doctype="ods",filename=Salida_PE,template=Plantilla_PE)
+
+Tabla_EP=Matriz_PE.sheets[0]
+
+Tabla_EP['B4'].set_value(No_solicitud)
+Tabla_EP['B5'].set_value(Codigo_Proyecto)
+Tabla_EP['B6'].set_value(Nombre_Solicita)
+
+row_matrix=10
+
+n_cols=Tabla_EP.ncols()
+n_rows=Tabla_EP.nrows()
+count_cols=n_EST-n_cols+1
+count_rows=n_rows+n_CONT-row_matrix
+
+Tabla_EP.append_columns(count=count_cols)
+Tabla_EP.append_rows(count=count_rows)
 
 
 for i in range(1,n_EST):
-  Tabla_EP[0,i].set_value(EST[i-1]['estacion'])
-  Tabla_EC[0,i].set_value(EST[i-1]['estacion'])
+  Tabla_EP[row_matrix-1,i].set_value(EST[i-1]['estacion'])
 
-for j in range(1,n_PARAM):
-  Tabla_EP[j,0].set_value(PARAM[j-1]['parametro'])
+fila_end=row_matrix+n_CONT
+for j in range(row_matrix,fila_end):
+  parametro=PARAM[j-row_matrix]['parametro']
+  Tabla_EP[j,0].set_value(parametro)
 
-for j in range(1,n_CONT)  :
-  Tabla_EC[j,0].set_value(CONT[j-1]['contenedor'])
+Matriz_PE.save()
 
-index = sheets.names()
-
-Matrices.save()
 #----EJEMPLO: https://pypi.python.org/pypi/ezodf
 #ods = newdoc(doctype='ods', filename='spreadsheet.ods')
 #sheet = Sheet('SHEET', size=(10, 10))
