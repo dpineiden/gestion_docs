@@ -222,9 +222,9 @@ for ((i=0;i<=$Cant_lab-1;i++))
       N_filas=limites[2];
       N_Lab=limites[3];
       posicion_Matriz=N_Lab-3;
-      posicion_Cotizacion=N_Lab+3;
-      posicion_Costo=N_Lab+4;
-      posicion_Unidad=N_Lab+5;
+      posicion_Cotizacion=N_Lab+2;
+      posicion_Costo=N_Lab+3;
+      posicion_Unidad=N_Lab+4;
       #print lab;
       if($N_Lab == lab && $posicion_Matriz == columnas[1] )
 	{

@@ -76,24 +76,12 @@ Salida_PE='salida/Matriz_PE_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
 Matriz_CE = newdoc(doctype="ods",filename=Salida_CE,template=Plantilla_CE)
 #Cargar la hoja template en el python
 Tabla_EC = Matriz_CE.sheets[0]
-#En C4 se pone No_solicitud servicio
-Tabla_EC['C4'].set_value(No_solicitud)
-#En C5 Nombre de proyecto
-Tabla_EC['C5'].set_value(Nombre_Proyecto)
 #En C6 es el código del proyecto
-Tabla_EC['C6'].set_value(Codigo_Proyecto)
-#En C7 Nombre del Solicitante
-Tabla_EC['C7'].set_value(Nombre_Solicita)
-#En c8 el área que Solicitante
-Tabla_EC['C8'].set_value(Nombre_Area)
-#en C9 la fecha de No_solicitud
-Tabla_EC['C9'].set_value(Fecha_Solicita)
-#En c10 fecha entrega
-Tabla_EC['C10'].set_value(Fecha_Entrega)
+Tabla_EC['B6'].set_value(Codigo_Proyecto)
 #Crear dos tablas, una para estacion parametros, otra para contenedor.
 
 #Fila de llenado
-row_matrix=12
+row_matrix=11
 
 n_cols=Tabla_EC.ncols()
 n_rows=Tabla_EC.nrows()
@@ -122,11 +110,10 @@ Matriz_PE = newdoc(doctype="ods",filename=Salida_PE,template=Plantilla_PE)
 
 Tabla_EP=Matriz_PE.sheets[0]
 
-Tabla_EP['B4'].set_value(No_solicitud)
-Tabla_EP['B5'].set_value(Codigo_Proyecto)
-Tabla_EP['B6'].set_value(Nombre_Solicita)
+Tabla_EP['B4'].set_value(Codigo_Proyecto)
+Tabla_EP['B5'].set_value(Nombre_Solicita)
 
-row_matrix=10
+row_matrix=11
 
 n_cols=Tabla_EP.ncols()
 n_rows=Tabla_EP.nrows()
