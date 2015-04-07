@@ -1,0 +1,60 @@
+
+IDEAS
+=====
+
+Spreadsheet
+-----------
+
+NumericalHarvester
+~~~~~~~~~~~~~~~~~~
+
+Collect numerical values from spreadsheets/tables as array.array() or
+numpy.array() objects.
+
+ignores following cell value types by intention:
+
+- date
+- time
+- string
+- boolean
+
+options:
+
+- replace ignored values by a default value
+- ignore float/percentage/currency
+- ignore hidden data
+- ignore incomplete rows/columns
+- autodetect harvest ranges
+
+FormulaBuilder
+~~~~~~~~~~~~~~
+
+from tableutils import cref, cfunc
+
+cref('A1') => ".A1"
+cref('A1', 'Sheet2') => "Sheet2.A1"
+cref('A1', 'Sheet Two') => "'Sheet Two'.A1"
+
+A1 = cref('A1', 'Sheet2')
+A10 = cref('A10', 'Sheet2')
+
+crange = "[{0}:{1}]".format(A1, A10)
+
+fstr = "of:=%s" % cfunc('SUM', crange, '[.B1]', '[.B2]')
+
+=> "of:=SUM([Sheet2.A1:Sheet2.A10];[.B1];[.B2])"
+
+cref: ok, for sheetnames with and without spaces
+cfunc: NOT necessary, write a good tutorial for formula writing
+
+
+Variables and User Fields handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Look spec v1.2 pp 139 - 144
+
+from ezodf import opendocument
+
+doc = opendocument('PATH')
+
+doc.vars.simple['varname'] = u"AnyData"
+doc.vars.user_field['varname'] = u"AnyData"

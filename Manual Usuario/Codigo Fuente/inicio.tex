@@ -1,0 +1,38 @@
+\documentclass[12pt,openright,letterpaper] {report} 
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [utf8] {inputenc}
+\usepackage[overload]{textcase}
+\newcommand{\iemph}[1]{\MakeTextUppercase{#1}}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{graphicx}
+\graphicspath{{Imagenes/}} 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{transparent}
+\usepackage{enumerate}
+\usepackage{calc}
+\usepackage{lscape}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=blue
+}
+\usepackage{titlesec}
+\titleformat{\chapter}
+{\normalfont\fontsize{18}{15}\bfseries}{\thesection}{1em}{}
+\renewcommand\thesection{\roman{chapter}}
+\begin{document} 	
+	\include{portada}
+	\include{introduccion}
+	\include{estructura_datos}
+	\include{planilla_base}
+	\include{herramientas}
+	\include{extraccion_datos}
+	\include{completado_plantillas}				
+\end{document}

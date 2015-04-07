@@ -1,0 +1,18 @@
+Sobre este repositorio
+==========================================================================
+
+Este repositorio contiene las transparencias y el material
+de apoyo para la presentación sobre el uso de Python y las
+librerías POD/Appy para generar documentos automáticamente.
+
+Los ejemplos están probados con Python 2.7, pero probablemente
+funcionarán también con versiones anteriores.
+
+Enlaces
+================================================================================
+
+ * Python http://www.python.org/
+
+ * The Appy Framework http://appyframework.org/pod.html
+ 
+
