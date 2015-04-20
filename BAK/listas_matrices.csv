@@ -1,2 +1,0 @@
-
-awk -F';' 'BEGIN{printf "agua dulce"}(FNR==1){for (i=1;i<NF;i++){if($i~"agua dulce"){printf ";"i}}}' SSE_matriz.csv | xargs -I input echo input

@@ -12,7 +12,7 @@ class Cliente(models.Model):
 	email_contact = models.EmailField(max_length=100)
 	def __unicode__(self):
 		return self.name
-	
+      
 	class Meta:
 		ordering = ['name']
 
@@ -29,11 +29,13 @@ class Proyecto(models.Model):
 class Planilla_SSE(models.Model):
 	project = models.ForeignKey(Proyecto, default=1)
 	#	file_sse= ContentTypeRestrictedFileField(upload_to ="procesa_fl/sse_files",max_upload_size=20971520,content_types=['aplication/xlsx', 'application/xls',],blank=True, null=True)	
-	file_sse= models.FileField(default='',upload_to ="procesa_fl/sse_files")	
+	file_sse = models.FileField(default='',upload_to ="procesa_fl/sse_files")	
 	user_key = models.ForeignKey(User)
 	upload_date = models.DateTimeField(auto_now=True)
 	def __unicode__(self):
 		return self.file_sse.name
+	def filename(self):
+		return os.path.basename(self.file_sse.name)
 	class Meta:
 		ordering = ['file_sse','upload_date','project', 'user_key']
 	
@@ -41,3 +43,5 @@ class Planilla_SSE_FORM(ModelForm):
 	class Meta:
 		model = Planilla_SSE
 		fields = ['file_sse','project', 'user_key']
+	def filename(self):
+		return os.path.basename(self.model.file_sse.name)

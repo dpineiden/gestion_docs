@@ -1,7 +1,9 @@
 #!/bin/bash 
 echo "Se ha ejecutado el scripts desde python!! Muy bien!"
 pwd
-path="./procesa_fl/sse_files/Patron_FL.xlsx"
-destino="./procesa_fl/procesa_sse/."
-echo "cp "$path" ."
+path="../sse_files/Patron_FL.xlsx"
+destino=" ."
+echo "cp "$path$destino
 cp $path $destino
+pwd
+./extrac_data_oficial.sh -f Patron_FL.xlsx
