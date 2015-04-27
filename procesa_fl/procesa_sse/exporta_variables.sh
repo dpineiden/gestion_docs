@@ -26,3 +26,4 @@ export str_limites
 export str_matriz
 export str_this_matrices
 export "export"
+export OUT_FOLDER

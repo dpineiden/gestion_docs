@@ -49,6 +49,7 @@ unset str_matriz
 unset str_this_matrices
 unset labs
 unset Laboratorios
+unset OUT_FOLDER
 #Pasar Planilla Matriz a CSV,se coloca el numero de la hoja matriz en planilla a convertir
 hoja_matriz=1
 hoja_labs=2
@@ -218,7 +219,7 @@ for ((i=0;i<=$Cant_lab-1;i++))
       #limites=($Posicion_base $N_filas $N_Lab)
       #Cada nueva variable en awk se debe ingresar antecediendo -v
       #awk -v var="${test[*]}" -v group="$Grupo" '{n=split(var,test," ");print test[2], group}' SSE_matriz.csv
-      awk -F';' -v limit="${limites[*]}" -v matriz_cols="$matriz_cols" -v lab="$Nombre_lab" '{
+      awk -F';' -v limit="${limites[*]}" -v matriz_cols="$matriz_cols" -v lab="$Nombre_lab" -v nCE="$Posicion_ME" '{
       OFS=";";
       ncols=split(matriz_cols,columnas,";");
       nlim=split(limit,limites," ");
@@ -228,9 +229,11 @@ for ((i=0;i<=$Cant_lab-1;i++))
       posicion_Matriz=N_Lab-3;
       posicion_Cotizacion=N_Lab+2;
       posicion_Costo=N_Lab+3;
-      posicion_Unidad=N_Lab+4;
-      #print lab;
-      if($N_Lab == lab && $posicion_Matriz == columnas[1] )
+      posicion_Unidad=N_Lab+4;      
+      #print "Hola:" N_Lab,$N_Lab, lab;
+      #print $posicion_Matriz, columnas[1], N_Lab, $N_Lab, lab;
+      if($N_Lab == lab && $posicion_Matriz == columnas[1])
+      #if($N_Lab == lab && NR < nCE)
 	{
 	#print $posicion_Matriz, columnas[1], N_Lab, $N_Lab, lab;
 	estaciones=$1;
@@ -239,12 +242,15 @@ for ((i=0;i<=$Cant_lab-1;i++))
 	N_cotizacion=$posicion_Cotizacion;
 	Costo=$posicion_Costo;
 	Unidad_Costo=$posicion_Unidad;
+	#print  $N_Lab;
 	if($N_Lab == "CEA")
 	{
+	  #print lab,columnas[1], estaciones, parametro , replica;
 	  print lab,columnas[1], estaciones, parametro , replica >>"CEASA_FL33.csv";
 	} 
 	else if($N_Lab != "CEA")
 	{
+	  #print lab,columnas[1], estaciones, parametro , replica, N_cotizacion,Costo,Unidad_Costo;
 	  print lab,columnas[1], estaciones, parametro , replica, N_cotizacion,Costo,Unidad_Costo>>"OrdenCompra.csv";
 	}
 	}
@@ -341,7 +347,13 @@ export str_this_matrices=$(echo {this_matrices[*]})
 
 ######################################
 grep "export" extrac_data_oficial.sh | awk -F'=' '{print $1}' | awk '{print  $2"=os.environ[\""$2"\"]"}'|awk -F'=' '{exportar = "export " $1;exportar | getline d; close(exportar); print exportar}'>exporta_variables.sh
-
+cd salida
+date_0=$(date -d "15-04-21" +%s) #Desde el 21 de abril 2015 se inicia la numeracion
+date_1=$(date +%s)
+date_f=$(($date_1-$date_0))
+export OUT_FOLDER=$Codigo_Proyecto"_SSE_"$No_solicitud"_ref_"$date_f
+mkdir $OUT_FOLDER
+cd ..
 cd PRE_CSV
 rm *.csv 
 cd ..

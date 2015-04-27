@@ -23,6 +23,7 @@ from py_libs import *
 from ezodf import newdoc, Paragraph, Heading, Sheet, opendoc, Cell
 
 ##Importar variables de proyecto
+OUT_FOLDER = os.environ["OUT_FOLDER"]
 No_solicitud=os.environ["No_solicitud"]
 Nombre_Proyecto=os.environ["Nombre_Proyecto"]
 Codigo_Proyecto=re.sub(' ' ,'',os.environ["Codigo_Proyecto"])
@@ -66,8 +67,8 @@ Plantilla_CE='templates/R115.ods'
 #Para parametros-estaciones
 Plantilla_PE='templates/Param_Est.ods'
 
-Salida_CE='salida/R115_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
-Salida_PE='salida/Matriz_PE_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
+Salida_CE='salida/'+OUT_FOLDER+'/R115_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
+Salida_PE='salida/'+OUT_FOLDER+'/Matriz_PE_'+Codigo_Proyecto+'_No_SSE_'+No_solicitud+'.ods'
 
 
 #Generar R115 de contenedores estaciones

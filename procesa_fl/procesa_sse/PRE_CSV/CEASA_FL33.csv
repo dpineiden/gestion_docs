@@ -1,12 +1,41 @@
-CEA;Agua Dulce;11.00;Alcalinidad total;1.00
-CEA;Agua Dulce;11.00;Amonio;1.00
-CEA;Agua Dulce;11.00;cadmio total;1.00
-CEA;Agua Dulce;11.00;cadmio disuelto;1.00
-CEA;Agua Dulce;7.00;Clorofila en fitoplancton;1.00
-CEA;Agua Dulce;11.00;Cloruros;1.00
-CEA;Agua Dulce;11.00;cobre disuelto;1.00
-CEA;Agua Dulce;17.00;Conductividad;1.00
-CEA;Agua Dulce;11.00;cromo total;1.00
-CEA;Agua Dulce;11.00;cromo disuelto;1.00
-CEA;Agua Dulce;11.00;hierro total;1.00
-CEA;Agua Dulce;11.00;hierro disuelto;1.00
+CEA;Agua Salar;39;nitrógeno total kjeldahl;1.00
+CEA;Agua Salar;39;Plata total;1.00
+CEA;Agua Salar Dulce;56;Alcalinidad;1.00
+CEA;Agua Salar Dulce;56;Amonio;1.00
+CEA;Agua Salar Dulce;56;Arsénico total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Bario total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Bicarbonato;1.00
+CEA;Agua Salar Dulce;56;Boro total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Cadmio total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Calcio;1.00
+CEA;Agua Salar Dulce;56;Carbonato;1.00
+CEA;Agua Salar Dulce;56;Cloruro;1.00
+CEA;Agua Salar Dulce;56;Cobalto total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Cobre total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Conductividad;1.00
+CEA;Agua Salar Dulce;56;Cromo total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Fósforo total;1.00
+CEA;Agua Salar Dulce;56;Hierro total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Litio total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Magnesio total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Manganeso total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Molibdeno total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Niquel total y disuelto;1.00
+CEA;Agua Salar Dulce;56;Nitrato;1.00
+CEA;Agua Salar Dulce;56;nitrito;1.00
+CEA;Agua Salar Dulce;56;Ortofosfato;1.00
+CEA;Agua Salar Dulce;56;Oxígeno disuelto;1.00
+CEA;Agua Salar Dulce;56;pH;1.00
+CEA;Agua Salar Dulce;56;plomo total y disuelto;1.00
+CEA;Agua Salar Dulce;56;potasio total y disuelto;1.00
+CEA;Agua Salar Dulce;56;salindad;1.00
+CEA;Agua Salar Dulce;56;sílicio total y disuelto;1.00
+CEA;Agua Salar Dulce;56;sodio;1.00
+CEA;Agua Salar Dulce;56;solidos totales suspendidos;1.00
+CEA;Agua Salar Dulce;56;sulfato;1.00
+CEA;Agua Salar Dulce;56;temperatura;1.00
+CEA;Agua Salar Dulce;56;Turbidez;1.00
+CEA;Agua Salar Dulce;56;Zinc total y disuelto;1.00
+CEA;Sedimento Salar;39;Selenio total;1.00
+CEA;Sedimento Salar;39;Vanadio total;1.00
+CEA;Sedimento Salar Dulce;39;Potencial redox;1.00

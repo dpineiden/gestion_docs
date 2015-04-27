@@ -1,9 +1,11 @@
 from django.db import models
 from django.forms import ModelForm
+from django.forms.fields import FilePathField
 from django.contrib.auth.models import User
 from formatChecker import ContentTypeRestrictedFileField
-#from django.contrib import admin
-#admin.autodiscover()
+import os
+import subprocess
+from unipath import Path
 
 # Create your models here.
 class Cliente(models.Model):
@@ -29,7 +31,7 @@ class Proyecto(models.Model):
 class Planilla_SSE(models.Model):
 	project = models.ForeignKey(Proyecto, default=1)
 	#	file_sse= ContentTypeRestrictedFileField(upload_to ="procesa_fl/sse_files",max_upload_size=20971520,content_types=['aplication/xlsx', 'application/xls',],blank=True, null=True)	
-	file_sse = models.FileField(default='',upload_to ="procesa_fl/sse_files")	
+	file_sse = models.FileField(default='',upload_to ="procesa_fl/sse_files")	#En vez de ruta, pasar a un metodo que transforme filename http://stackoverflow.com/questions/2680391/in-django-changing-the-file-name-of-uploading-file
 	user_key = models.ForeignKey(User)
 	upload_date = models.DateTimeField(auto_now=True)
 	def __unicode__(self):
@@ -43,5 +45,20 @@ class Planilla_SSE_FORM(ModelForm):
 	class Meta:
 		model = Planilla_SSE
 		fields = ['file_sse','project', 'user_key']
-	def filename(self):
-		return os.path.basename(self.model.file_sse.name)
+
+
+#Agregar modelo de archivo derivado del archivo subido anteriormente.
+
+class SSE_Processed_Files(models.Model):
+	planilla = models.ForeignKey(Planilla_SSE, default = 1)
+	folder = models.CharField(max_length = 50)
+	processed_files = models.FilePathField(recursive = True, max_length=500)
+	save_date = models.DateTimeField(auto_now=True)
+	
+	def __unicode__(self):
+		return self.folder
+		
+	class Meta:
+		ordering = ['planilla','processed_files','save_date']
+		
+		

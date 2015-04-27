@@ -16,6 +16,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+#ADD MEDIA and IMAGE paths
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#STATICFILES_DIRS = (
+#    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+#    # Always use forward slashes, even on Windows.
+#    os.path.join(BASE_DIR, 'static'),
+#    os.path.join(BASE_DIR, 'gestion_docs/procesa_fl/templates/static/'),
+#)
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$jy+r44f82fx24jx$irf&lha8k7rd(b%6d%ut@0ghcdd&pp7-k'
 
@@ -30,6 +42,12 @@ TEMPLATE_DIRS = (
 	'templates',
 	'procesa_fl/templates',
 )
+#Upload handler
+FILE_UPLOAD_HANDLERS = (
+	"django.core.files.uploadhandler.MemoryFileUploadHandler",
+	"django.core.files.uploadhandler.TemporaryFileUploadHandler",
+)
+ 
 
 ALLOWED_HOSTS = []
 

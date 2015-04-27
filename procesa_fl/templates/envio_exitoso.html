@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block app %}
     <h2>Envio de archivo exitoso!</h2>
+    <p>Descarga el archivo ZIP desde el botón!</p>
+    <a href={{ZIP_NAME}}><img type="image/svg+xml" src='{% static "images/templates/descarga.svg" %}' /></a>
 {% endblock %}
+ 

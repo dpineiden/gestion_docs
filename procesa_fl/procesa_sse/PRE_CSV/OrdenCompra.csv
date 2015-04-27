@@ -1,9 +1,47 @@
-SGS SANTIAGO;Agua Dulce;7.00;Aceites y grasas;1.00;SAE-2654-15;0.80;UF
-SGS SANTIAGO;Agua Dulce;11.00;DBO;1.00;SAE-2654-15;0.40;UF
-SGS SANTIAGO;Agua Dulce;11.00;DQO;1.00;SAE-2654-15;0.40;UF
-SGS SANTIAGO;Agua Dulce;11.00;nitrógeno total;1.00;SAE-2654-15;1.20;UF
-ALS SANTIAGO;Agua Dulce;11.00;Carbono orgánico;1.00;SIS-4789-15;100.00;dolares
-ALS SANTIAGO;Sedimento Dulce;11.00;Fosforo total;1.00;SIS-4789-15;150.00;dolares
-CENMA;Sedimento Dulce;11.00;Boro;1.00;AO-13-15;3.60;UF
-BIODIVERSA;Agua Dulce;11.00;Clorofila a;1.00;BIO-14221;1.50;UF
-AGUASIN;Agua Dulce;11.00;Sílice;1.00;12458-15;5600.00;pesos
+SGS SANTIAGO;Agua Salar Dulce;56;Coliformes fecales;1.00;ENVI SAN 217689_2014;0.49;UF
+SGS SANTIAGO;Agua Salar Dulce;56;Coliformes totales;1.00;ENVI SAN 217689_2014;0.49;UF
+SGS SANTIAGO;Agua Salar Dulce;56;DBO5;1.00;EP Noviembre 2014 CEA;0.47;UF
+SGS SANTIAGO;Agua Salar Dulce;56;Sólidos totales disueltos;1.00;ENVI SAN 217689_2014;0.34;UF
+SGS SANTIAGO;Agua Salar Dulce;56;Fluoruro;1.00;EP Noviembre 2014 CEA;0.46;UF
+SGS SANTIAGO;Agua Salar Dulce;56;cianuro;1.00;EP Noviembre 2014 CEA;0.39;UF
+SGS SANTIAGO;Agua Salar Dulce;56;sulfuro;1.00;Cotizacion parámetro salar;0.22;UF
+SGS SANTIAGO;Agua Salar Dulce;56;aceites y grasas;1.00;EP Noviembre 2014 CEA;0.46;UF
+SGS SANTIAGO;Agua Salar Dulce;56;aluminio total;1.00;Cotizacion parámetro salar;0.15;UF
+SGS SANTIAGO;Agua Salar Dulce;56;aluminio disuelto;1.00;ENVI SAN 217689_2014;0.49;UF
+SGS SANTIAGO;Agua Salar Dulce;56;berilio total;1.00;Cotizacion parámetro salar;0.22;UF
+SGS SANTIAGO;Agua Salar Dulce;56;berilio disuelto;1.00;Cotizacion parámetro salar;0.24;UF
+SGS SANTIAGO;Agua Salar Dulce;56;estaño total;1.00;Cotizacion parámetro salar;0.15;UF
+SGS SANTIAGO;Agua Salar Dulce;56;estaño disuelto;1.00;ENVI SAN 217689_2014;0.29;UF
+SGS SANTIAGO;Agua Salar Dulce;56;mercurio total;1.00;Cotizacion parámetro salar;0.58;UF
+SGS SANTIAGO;Agua Salar Dulce;56;mercurio disuelto;1.00;Cotizacion parámetro salar;0.42;UF
+SGS SANTIAGO;Agua Salar Dulce;56;plata total;1.00;Cotizacion parámetro salar;0.22;UF
+SGS SANTIAGO;Agua Salar Dulce;56;plata disuelto;1.00;ENVI SAN 217689_2014;0.31;UF
+SGS SANTIAGO;Agua Salar Dulce;56;selenio total;1.00;Cotizacion parámetro salar;0.22;UF
+SGS SANTIAGO;Agua Salar Dulce;56;selenio disuelto;1.00;ENVI SAN 217689_2014;0.47;UF
+SGS SANTIAGO;Agua Salar Dulce;56;vanadio total;1.00;Cotizacion parámetro salar;0.22;UF
+SGS SANTIAGO;Agua Salar Dulce;56;vanadio disuelto;1.00;ENVI SAN 217689_2014;0.29;UF
+SGS SANTIAGO;Agua Salar Dulce;56;nitrógeno total kjeldahl;1.00;ENVI SAN 217689_2014;0.68;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Arsénico total;1.00;ENVI SAN 217689_2014;0.47;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Cobalto total;1.00;ENVI SAN 217689_2014;0.31;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Fosforo total;1.00;ENVI SAN 217689_2014;0.49;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Granulometría;1.00;EP Noviembre 2014 CEA;2;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Manganeso total;1.00;ENVI SAN 217689_2014;0.31;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Materia orgánica;1.00;EP Noviembre 2014 CEA;0.5;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Mercurio total;1.00;ENVI SAN 217689_2014;0.47;UF
+SGS SANTIAGO;Sedimento Salar Dulce;39;Zinc total;1.00;ENVI SAN 217689_2014;0.31;UF
+ALS SANTIAGO;Agua Salar Dulce;56;Color;1.00;SAE-419-14 CEA;5;USD
+ALS SANTIAGO;Agua Salar Dulce;56;Cromo VI;1.00;SAE-419-14 CEA;15;USD
+ALS SANTIAGO;Sedimento Salar Dulce;39;COT;1.00;SAE-125-15-CEA_COT;50;USD
+CENMA;Sedimento Salar Dulce;39;Boro total;1.00;Cot 024-01-2015;4;UF
+CENMA;Sedimento Salar Dulce;39;Litio total;1.00;Cot 024-01-2015;;
+DICTUC;Sedimento Salar Dulce;39;Aluminio total;1.00;Cot 1766-2014;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Bario total;1.00;15-269;0.22;UF
+DICTUC;Sedimento Salar Dulce;39;Berilio total;1.00;Cot 1766-2014;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;CAdmio total;1.00;15-269;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Cobre total;1.00;15-269;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Cromo total;1.00;15-269;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Hierro total;1.00;15-269;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Molibdeno total;1.00;Cot 1766-2014;0.2;UF
+DICTUC;Sedimento Salar Dulce;39;Niquel total;1.00;15-269;0.22;UF
+DICTUC;Sedimento Salar Dulce;39;Plomo total;1.00;15-269;0.2;UF
+BIODIVERSA;Agua Salar Dulce;56;Clorofila a;1.00;Cot-6614;21287;PESO

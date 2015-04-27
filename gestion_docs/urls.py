@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from gestion_docs.views import hello, current_datetime, hours_ahead
 from procesa_fl.views import envio_sse, envio_exitoso
+import settings
+from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',

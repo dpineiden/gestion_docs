@@ -1,1 +1,7 @@
 procesa_fl/sse_files
+procesa_fl/procesa_sse/salida/*.zip
+procesa_fl/procesa_sse/salida/*.ods
+procesa_fl/procesa_sse/salida/*.odt
+procesa_fl/procesa_sse/R114
+procesa_fl/procesa_sse/salida/**
+!procesa_fl/procesa_sse/salida/proceso.sh

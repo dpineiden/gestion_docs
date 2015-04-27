@@ -23,9 +23,12 @@ if [ $nuevo_archivo -eq 1 ]; then
  ARCHIVO=$output_file
 fi
 
+cp "../sse_files/"$ARCHIVO .
 . extrac_data_oficial.sh -f $ARCHIVO
 python crear_fl33.py 
 python amatriz_ezodf.py 
 cd salida/
 ./proceso.sh 
+cd ..
+mv $ARCHIVO R114/
  
