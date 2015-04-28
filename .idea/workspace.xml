@@ -2,15 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e980779b-3a9e-410d-97c0-28310d43c382" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/procesa_fl/procesa_sse/crear_fl33.py" afterPath="$PROJECT_DIR$/procesa_fl/procesa_sse/crear_fl33.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/procesa_fl/templates/envio_exitoso.html" afterPath="$PROJECT_DIR$/procesa_fl/templates/envio_exitoso.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/procesa_fl/models.py" afterPath="$PROJECT_DIR$/procesa_fl/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/procesa_fl/procesa_sse/salida/proceso.sh" afterPath="$PROJECT_DIR$/procesa_fl/procesa_sse/salida/proceso.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gestion_docs/settings.py" afterPath="$PROJECT_DIR$/gestion_docs/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gestion_docs/urls.py" afterPath="$PROJECT_DIR$/gestion_docs/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/procesa_fl/views.py" afterPath="$PROJECT_DIR$/procesa_fl/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gestion_docs.iws" />
@@ -423,6 +414,13 @@
       <option name="number" value="Default" />
       <updated>1429800220392</updated>
     </task>
+    <task id="LOCAL-00001" summary="se va configurando ruta para descarga de ZIP File">
+      <created>1430254994725</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1430254994725</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -451,6 +449,7 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33464053" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3938224" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -485,6 +484,8 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="se va configurando ruta para descarga de ZIP File" />
+    <option name="LAST_COMMIT_MESSAGE" value="se va configurando ruta para descarga de ZIP File" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
