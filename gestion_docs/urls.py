@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from gestion_docs.views import hello, current_datetime, hours_ahead
-from procesa_fl.views import envio_sse, envio_exitoso
+from procesa_fl.views import envio_sse, envio_exitoso, download_zip
 import settings
 from django.conf.urls.static import static
 admin.autodiscover()
@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^admin/',include(admin.site.urls)),
     url(r'^envio_sse/$',envio_sse, name="envio_sse"),
     url(r'^envio_sse/exitoso$',envio_exitoso),
+	url(r'^envio_sse/descarga/zip/%i$',download_zip),
     )

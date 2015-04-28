@@ -15,12 +15,12 @@ from unipath import Path
 def envio_sse(request):
 	if request.method == 'POST':
 		sse = Planilla_SSE_FORM(request.POST, request.FILES)
-		if sse.is_valid():			
+		if sse.is_valid():
 			new_sse = sse.save()
 			print "Filename: "+new_sse.filename()
 			os.environ['LD_LIBRARY_PATH'] = "/procesa_fl/procesa_sse/"
 			print request.FILES['file_sse'].name
-			#print new_sse.filename()			
+			#print new_sse.filename()
 			file_sse_name = new_sse.filename()
 			bash='/bin/bash ejecutar.sh -f '+file_sse_name#hay que hacer un rename del archivo, antes de guardar
 			print bash
@@ -32,18 +32,21 @@ def envio_sse(request):
 			os.path.dirname(SSE_PATH)
 			sys.path.append(SSE_PATH)
 			bash_process=subprocess.Popen( bash , shell = True , stdout = subprocess.PIPE )
-			OF, err=bash_process.communicate()			
+			OF, err=bash_process.communicate()
 			OUT_FOLDER = OF.rstrip()
 			print OUT_FOLDER
-			ZIP_NAME = OUT_FOLDER+".zip"
-			path_zip=os.environ['LD_LIBRARY_PATH']+"salida/"+ZIP_NAME
-			print path_zip
+			name= OUT_FOLDER.splitlines()
+			print name.__len__()
+			len_name=name.__len__()
+			ZIP_NAME = name[-1]+".zip"
+			path_zip=ZIP_NAME
+			print "ARchivo ZIP: "+path_zip
 			os.chdir(original_path)
 			#Rescatar la carpeta en que se guardan los archivos
-			#Obtener nombre de archivo zipeado 
+			#Obtener nombre de archivo zipeado
 			#EMAIL o Descarga Directa?>>>Lo segundo es mas sencillo!!!
-			request.session['zip_file'] = path_zip	
-			return redirect('/envio_sse/exitoso')	
+			request.session['zip_file'] = ZIP_NAME
+			return redirect('/envio_sse/exitoso')
 	else:
 		sse = Planilla_SSE_FORM()
 	return render(request,'upload_sse.html',{'form':sse})
@@ -52,6 +55,14 @@ def envio_exitoso(request):
 	ZIP_NAME=request.session['zip_file']
 	print "Archivo zip rescatado: "+ZIP_NAME
 	return render(request,'envio_exitoso.html', dict(ZIP_NAME=ZIP_NAME))
+
+def download_zip(request):
+	ZIP_NAME=request.session['zip_file']
+	response = HttpResponse(mimetype="application/zip")
+	path_to_file="procesa_fl/procesa_sse/salida/"+smart_str(ZIP_NAME)
+	response['Content-Disposition'] = "attachment; filename = "+smart_str(path_to_file)
+	response['X-Sendfile'] = smart_str(path_to_file)
+	return response
 
 def save_path(SSE, FOLDER):
 	PFS = SSE_Processed_Files()

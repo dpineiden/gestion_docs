@@ -10,7 +10,7 @@ import re
 import csv
 delimiter=';'
 fieldnames_me=['matriz','estaciones']
-fieldnames_fl33=['lab','matriz','n_estaciones','parametro','replicas']
+fieldnames_fl33=['lab','matriz','n_estaciones','parametro', 'replicas']
 fieldnames_r08=['lab','matriz','n_estaciones','parametro','replicas','n_cotizacion','costo','unidad_costo']
 fieldnames_obs=['lab','matriz','observacion']
 fieldnames_equ=['equipo','cantidad']

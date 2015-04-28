@@ -20,13 +20,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-#STATICFILES_DIRS = (
+STATICFILES_DIRS = (
 #    # Put strings here, like "/home/html/static" or "C:/www/django/static".
 #    # Always use forward slashes, even on Windows.
 #    os.path.join(BASE_DIR, 'static'),
-#    os.path.join(BASE_DIR, 'gestion_docs/procesa_fl/templates/static/'),
-#)
+    os.path.join(BASE_DIR, '/gestion_docs/procesa_fl/procesa_sse/salida/'),
+    os.path.join(BASE_DIR, '/gestion_docs/procesa_fl/sse_files/'),
+)
 
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django.contrib.staticfiles.finders.DefaultStorageFinder",
+)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$jy+r44f82fx24jx$irf&lha8k7rd(b%6d%ut@0ghcdd&pp7-k'
