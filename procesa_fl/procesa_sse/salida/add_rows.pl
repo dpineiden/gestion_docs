@@ -8,7 +8,7 @@ use Scalar::Util::Numeric qw(isint);
 #File input: perl add_wors.pk < file.odt
 
 my @file_input = split /\./,$ARGV[0];
-print "Nombre :". $file_input[0]."\n";
+#print "Nombre :". $file_input[0]."\n";
 
 #nombre sin extensión
 my $file=$file_input[0];
@@ -40,7 +40,7 @@ while (defined($documenta->selectElementByContent("XXNULLXX_".$count))){
 $documenta->save();
 
 my $document = odfDocument(file => $in_file);
-print "Cantidad de elementos a llenar: ".$count."\n";
+#print "Cantidad de elementos a llenar: ".$count."\n";
 #Agregar fila a tabla: http://search.cpan.org/dist/OpenOffice-OODoc/OODoc/Text.pod#appendRow%28table_[,_options]%29
 #Conseguir cantidad de paginas
 ###Ahora, teniendo la lista de lugares en el texto en que existe un xxnullxx se itera colocando una nueva fila y revisando la cantidad
@@ -49,7 +49,7 @@ my $place;
 my $table;
 my $table_name;
 my %now_pg;
-my $now_cp = $cp;
+
 my $eerr;
 my $AX="";
 my $BX="";
@@ -58,18 +58,18 @@ my ($h, $l);
 my ($h1, $l1);
 #Modelo de tabla: Tabla2_{0...$count-1}
 my @lista_tablas = $document -> getTableList();
-print "Cantidad de tablas: ".@lista_tablas."\n";
+#print "Cantidad de tablas: ".@lista_tablas."\n";
 foreach (@lista_tablas) {
-	print $_."\n";	
+	#print $_."\n";	
 	($h1, $l1) = $document -> getTableSize($_);
-	print "Tamaño ".$h1.",".$l1."\n";
+	#print "Tamaño ".$h1.",".$l1."\n";
 }
 
 #Se calcula la cantida de páginas original del documento pasando a pdf y obteniendo la cantidad de páginas.
 my $to_pdf=system("unoconv -f pdf ".$in_file);
 my $count_pages=`pdfinfo $in_pdf_file | grep ^Pages:| awk -F':' '{print int(\$2)}'`;
-$cp=int($count_pages);
-
+my $cp=int($count_pages);
+my $now_cp =0;
 #Se realiza la iteracion para cada tabla 'Table2_i' existente y se rellena con filas blancas		
 foreach (0..($count-1)) {
 	$id=$_;#Id es la variable default de la iteracion 
@@ -79,9 +79,9 @@ foreach (0..($count-1)) {
 	my $id_tabla =3*$id+2;#la secuencia que corresponde solamente a las tablas 'table2_i'
 	my $table = $document -> getTable($id_tabla-1);	#Se activa la tabla correspondiente #Secundario
 	my $new_tname = $document -> tableName($id_tabla-1);	#Se extrae nombre de tabla #Secundario
-	print $id_tabla."-".$new_tname."\n";
+	#print $id_tabla."-".$new_tname."\n";
 	($h, $l) = $document -> getTableSize($table);#se obtiene el tamaño de tabla
-	print "Tamaño ".$h.",".$l."\n";
+	#print "Tamaño ".$h.",".$l."\n";
 	$document -> cellValue($table, $h-1, 0,'');	
 	while ( $now_cp <= int $cp ) {
 		$document -> appendRow($table );
@@ -91,10 +91,14 @@ foreach (0..($count-1)) {
 		$count_pages=`pdfinfo $in_pdf_file | grep ^Pages:| awk -F':' '{print int(\$2)}'`;
 		$now_cp=int($count_pages);
 		##Recuento de paginas	
-		print "La cantidad de páginas es: ".$now_cp."vs original: ".$cp." es entero? :". (isint $now_cp)."\n";
+		#print "La cantidad de páginas es: ".$now_cp." vs original: ".$cp." es entero? :". (isint $now_cp)."\n";
 	}
 	#Borrar la ultima línea puesta.
-	$document -> deleteRow($table, $h)
+	$document -> deleteRow($table, $h);
+	#if ($id==($count-1)){
+		#$document -> deleteRow($table, $h+1);
+		#$document -> deleteRow($table, $h+2);
+	#}
 }
-
-$document ->save("Salida.odt");
+$document ->save();
+system("unoconv -f pdf ".$in_file);
