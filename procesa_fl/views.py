@@ -57,12 +57,15 @@ def envio_exitoso(request):
 	return render(request,'envio_exitoso.html', dict(ZIP_NAME=ZIP_NAME))
 
 def download_zip(request):
-	ZIP_NAME=request.session['zip_file']
-	response = HttpResponse(mimetype="application/zip")
 	path_to_file="procesa_fl/procesa_sse/salida/"+smart_str(ZIP_NAME)
+	#r = request.get(path_to_file, stream = True)
+	#f = open(path_to_file, 'wb')
+	response = StreamingHttpResponse(streaming_content = path_to_file, mimetype="application/zip")
 	response['Content-Disposition'] = "attachment; filename = "+smart_str(path_to_file)
-	response['X-Sendfile'] = smart_str(path_to_file)
+	print path_to_file
+	#response['X-Sendfile'] = smart_str(path_to_file)
 	return response
+
 
 def save_path(SSE, FOLDER):
 	PFS = SSE_Processed_Files()

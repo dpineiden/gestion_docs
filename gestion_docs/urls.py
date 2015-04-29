@@ -17,5 +17,5 @@ urlpatterns = patterns('',
     url(r'^admin/',include(admin.site.urls)),
     url(r'^envio_sse/$',envio_sse, name="envio_sse"),
     url(r'^envio_sse/exitoso$',envio_exitoso),
-	url(r'^envio_sse/descarga/zip/%i$',download_zip),
+	url(r'^envio_sse/descarga/zip/(?P<ZIP_NAME>[\w.]{0,256})$',download_zip),
     )

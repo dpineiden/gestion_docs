@@ -3,6 +3,6 @@
 {% block app %}
     <h2>Envio de archivo exitoso!</h2>
     <p>Descarga el archivo ZIP desde el botón! Archivo: {{ZIP_NAME}}</p>
-    <a href=descarga/zip/{{ZIP_NAME}}><img type="image/svg+xml" src='{% static "images/templates/descarga.svg" %}' /></a>
+    <a href=descarga/zip/?ZIP_NAME={{ZIP_NAME}}><img type="image/svg+xml" src='{% static "images/templates/descarga.svg" %}' /></a>
 {% endblock %}
  
